@@ -4,7 +4,7 @@ import { useBoundaries } from './useBoundaries'
 import { useCovidData } from './useCovidData'
 import { Markss } from './Markss'
 import { interpolateBlues, schemeBlues, scaleThreshold, scalePow, scaleQuantize, scaleSequential, scaleSequentialLog, scaleSequentialQuantile, scaleLinear, scaleLog, max, extent } from 'd3'
-import { Calc } from './Calc'
+// import { Calc } from './Utilities/Calc'
 
 const width = 960
 const height = 500
@@ -16,7 +16,6 @@ const [hoveredValue, setHoveredValue] = useState({null:null})
 
 // const [colorLevel, setColorLevel] = useState([null])
 // console.log(hoveredValue.MODIFIED_ZCTA)
-
 
 // const handleSetHoveredValue = useCallback(event => {
 //   const { d } = event
