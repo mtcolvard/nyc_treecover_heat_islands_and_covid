@@ -3,7 +3,7 @@ import { Markss } from './Markss'
 
 import { interpolateBlues, schemeBlues, scaleThreshold, scalePow, scaleQuantize, scaleSequential, scaleSequentialLog, scaleSequentialQuantile, scaleLinear, scaleLog, max, extent } from 'd3'
 
-export const NycMap = ({ boundaries, covidData, hoveredValue }) => {
+export const NycMap = ({ boundaries, covidData, width, height, hoveredValue }) => {
   // console.log(hoveredValue.MODIFIED_ZCTA)
   // const handleSetHoveredValue = useCallback(event => {
   //   const { d } = event
@@ -38,6 +38,6 @@ export const NycMap = ({ boundaries, covidData, hoveredValue }) => {
     height={height}
     colorScale={colorScale}
     colorValue={colorValue}
-    onHover={setHoveredValue}
+    onHover={hoveredValue}
     />)
 }

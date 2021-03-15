@@ -1,5 +1,6 @@
-import React from 'react';
-import { scaleLinear, scaleTime, max, timeFormat, extent, histogram as bin, timeMonths, sum } from 'd3'
+import React, { useState, useCallback } from 'react';
+import { MarksHistogram } from  './MarksHistogram'
+import { schemeBlues, format, scaleLog, scaleLinear, scaleThreshold, scaleTime, max, timeFormat, extent, histogram as bin, timeMonths, sum } from 'd3'
 
 
 const width = 960;
@@ -14,27 +15,28 @@ const margin = { top: 70, right: 200, bottom: 15, left: 220 };
 
 export const TreeHistogram = ({ covidData }) => {
 
-  const innerHeight = height - margin.top - margin.bottom;
+const innerHeight = height - margin.top - margin.bottom;
 const innerWidth = width - margin.left - margin.right;
 
-const [hoveredValue, setHoveredValue] = useState(null);
+const initialMousePosition = {x: width/2, y: height/2}
 const [mousePosition, setMousePosition] = useState(initialMousePosition);
+const [hoveredValue, setHoveredValue] = useState(null);
 
 const handleMouseMove = useCallback(event => {
   const { clientX, clientY } = event;
   setMousePosition({ x: clientX, y: clientY });
 }, [setMousePosition]);
 
-const data = useData();
+const covidData = useCovidData();
+//const covidDataFields = [MODIFIED_ZCTA, NEIGHBORHOOD_NAME, BOROUGH_GROUP, label, lat, lon, COVID_CASE_COUNT, COVID_CASE_RATE, POP_DENOMINATOR, COVID_DEATH_COUNT, COVID_DEATH_RATE, PERCENT_POSITIVE, TOTAL_COVID_TESTS]
 const attributes = [
-  { id: 1, value: 'City', label: 'City', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500] },
-  { id: 2, value: 'Families', label: 'Families', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500]  },
-  { id: 3, value: 'Non_Family_Households', label: 'Non-Family Households', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500]  },
-  { id: 4, value: 'Households', label: 'Households', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500]  },
-  { id: 5, value: 'Cases', label: 'Cases', domainMin: 1, yColorScale: [10,100,200,250,300,350,400,450,500] },
-  { id: 6, value: 'CaseRate', label: 'Case Rate/100k', domainMin: 1, yColorScale: [1, max(data, yValue)]  },
-  { id: 7, value: 'Deaths', label: 'Deaths', domainMin: 1, yColorScale: [10,100,200,250,300,350,400,450,500] },
-  { id: 8, value: 'DeathRate', label: 'Death Rate/100k', domainMin: 10, yColorScale: [10,100,200,250,300,350,400,450,500] }
+  { id: 1, modZipTract: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
+  { id: 2, modZipTract: 'MODIFIED_ZCTA', value: 'BOROUGH_GROUP', label: 'Borough', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500]  },
+  { id: 3, modZipTract: 'MODIFIED_ZCTA', value: 'POP_DENOMINATOR', label: 'Neighborhood Population', domainMin: 0, yColorScale: [5000, 10000, 20000, 40000, 60000, 80000, 100000, 120000]  },
+  { id: 4, modZipTract: 'MODIFIED_ZCTA', value: 'COVID_CASE_RATE', label: 'Case Rate/100k', domainMin: 1, yColorScale: [1, max(data, yValue)]  },
+  { id: 5, modZipTract: 'MODIFIED_ZCTA', value: 'COVID_DEATHS_COUNT', label: 'Deaths', domainMin: 1, yColorScale: [10,100,200,250,300,350,400,450,500] },
+  { id: 6, modZipTract: 'MODIFIED_ZCTA', value: 'PERCENT_POSITIVE', label: 'Positive Test Percentage (Cumulative)', domainMin: 1, yColorScale: [4,6,8,10,12,14,16,18,20] },
+  { id: 7, modZipTract: 'MODIFIED_ZCTA', value: 'TOTAL_COVID_TESTS', label: 'Total Tests Administered', domainMin: 1, yColorScale: [4000,6000,9000,15000,30000,45000,60000,75000,90000] },
   ]
 
 const getLabel = value => {
@@ -77,7 +79,7 @@ const getDomainMin = value => {
   const xScale = scaleLinear()
     .domain(extent(data, xValue))
     .range([0, innerWidth])
-  	.nice();
+    .nice();
 
   const yScale = scaleLog()
     .domain([yDomainMin, max(data, yValue)])
@@ -89,22 +91,20 @@ const getDomainMin = value => {
 //    	.domain([10,100,200,250,300,350,400,450,500])
   		.domain(yColorScale)
     	.range(schemeBlues[9]);
-}
 
 return(
   <g transform={`translate(${margin.left},${margin.top})`}>
-    <Marks
+    <MarksHistogram
         binnedData={binnedData}
         xScale={xScale}
         yScale={yScale}
         tooltipFormat={d => d}
-        circleRadius={circleRadius}
         colorScale={colorScale}
         yColorValue={yColorValue}
         onHover={setHoveredValue}
       />
   </g>
-  )
+)}
 
 // <AxisBottom
 //   xScale={xScale}

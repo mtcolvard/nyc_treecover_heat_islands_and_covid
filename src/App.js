@@ -13,7 +13,7 @@ const width = 960
 const height = 500
 // const margin = { top: 20, right: 30, bottom: 65, left:90 }
 
-function App() {
+const App = () => {
 
   const boundaries = useBoundaries()
   const covidData = useCovidData()
@@ -30,6 +30,8 @@ function App() {
           covidData={covidData}
           hoveredValue={hoveredValue}
           boundaries={boundaries}
+          width={width}
+          height={height}
         />
         <TreeHistogram
         covidData={covidData}/>
