@@ -27,7 +27,6 @@ const handleMouseMove = useCallback(event => {
   setMousePosition({ x: clientX, y: clientY });
 }, [setMousePosition]);
 
-const covidData = useCovidData();
 //const covidDataFields = [MODIFIED_ZCTA, NEIGHBORHOOD_NAME, BOROUGH_GROUP, label, lat, lon, COVID_CASE_COUNT, COVID_CASE_RATE, POP_DENOMINATOR, COVID_DEATH_COUNT, COVID_DEATH_RATE, PERCENT_POSITIVE, TOTAL_COVID_TESTS]
 const attributes = [
   { id: 1, modZipTract: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
