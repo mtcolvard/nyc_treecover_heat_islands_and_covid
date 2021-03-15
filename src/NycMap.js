@@ -4,13 +4,11 @@ import { Markss } from './Markss'
 import { interpolateBlues, schemeBlues, scaleThreshold, scalePow, scaleQuantize, scaleSequential, scaleSequentialLog, scaleSequentialQuantile, scaleLinear, scaleLog, max, extent } from 'd3'
 
 export const NycMap = ({ boundaries, covidData, width, height, hoveredValue }) => {
-  // console.log(hoveredValue.MODIFIED_ZCTA)
+  
   // const handleSetHoveredValue = useCallback(event => {
   //   const { d } = event
   //   setHoveredValue({ d })
   //   }, [setHoveredValue])
-
-
 
   const rowByCity = new Map()
     covidData.forEach(d => {
@@ -23,7 +21,6 @@ export const NycMap = ({ boundaries, covidData, width, height, hoveredValue }) =
     scaleThreshold()
     .domain([4,6,8,10,12,14,16,18,20])
     .range(schemeBlues[9])
-
 
   // let thecounter = null
   // percentp.forEach((i) => {
