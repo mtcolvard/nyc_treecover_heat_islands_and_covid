@@ -29,10 +29,10 @@ const handleMouseMove = useCallback(event => {
 
 //const covidDataFields = [MODIFIED_ZCTA, NEIGHBORHOOD_NAME, BOROUGH_GROUP, label, lat, lon, COVID_CASE_COUNT, COVID_CASE_RATE, POP_DENOMINATOR, COVID_DEATH_COUNT, COVID_DEATH_RATE, PERCENT_POSITIVE, TOTAL_COVID_TESTS]
 const attributes = [
-  { id: 1, modZipTract: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
+  { id: 1, modZipTract: 'MODIFIED_ZCTA', value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
   { id: 2, modZipTract: 'MODIFIED_ZCTA', value: 'BOROUGH_GROUP', label: 'Borough', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500]  },
   { id: 3, modZipTract: 'MODIFIED_ZCTA', value: 'POP_DENOMINATOR', label: 'Neighborhood Population', domainMin: 0, yColorScale: [5000, 10000, 20000, 40000, 60000, 80000, 100000, 120000]  },
-  { id: 4, modZipTract: 'MODIFIED_ZCTA', value: 'COVID_CASE_RATE', label: 'Case Rate/100k', domainMin: 1, yColorScale: [1, max(data, yValue)]  },
+  { id: 4, modZipTract: 'MODIFIED_ZCTA', value: 'COVID_CASE_RATE', label: 'Cases/Neighborhood Population', domainMin: 1, yColorScale: [1000, 2000, 4000, 6000, 8000, 10000, 12500, 15000]  },
   { id: 5, modZipTract: 'MODIFIED_ZCTA', value: 'COVID_DEATHS_COUNT', label: 'Deaths', domainMin: 1, yColorScale: [10,100,200,250,300,350,400,450,500] },
   { id: 6, modZipTract: 'MODIFIED_ZCTA', value: 'PERCENT_POSITIVE', label: 'Positive Test Percentage (Cumulative)', domainMin: 1, yColorScale: [4,6,8,10,12,14,16,18,20] },
   { id: 7, modZipTract: 'MODIFIED_ZCTA', value: 'TOTAL_COVID_TESTS', label: 'Total Tests Administered', domainMin: 1, yColorScale: [4000,6000,9000,15000,30000,45000,60000,75000,90000] },

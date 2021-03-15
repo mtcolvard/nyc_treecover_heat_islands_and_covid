@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { csv } from 'd3'
 
-  const csvUrl = 'https://gist.githubusercontent.com/mtcolvard/3b781fbc735f6aac0cda7b42a7a272c6/raw/33c8cacbebbb3aa92e36f103c03f843583893834/gistfile2.csv'
+  const csvUrl = 'https://gist.githubusercontent.com/mtcolvard/341f5b92bf3b6edc9c991d668b56e2e4/raw/c5d932fbc32290e4e556405ebd68767b99116fa2/COVID%2520and%2520Income.csv'
 
   const row = d => {
     d.PERCENT_POSITIVE = +d['PERCENT_POSITIVE']
