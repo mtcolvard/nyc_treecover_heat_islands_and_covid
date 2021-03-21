@@ -1,7 +1,10 @@
 import React, { useState , useCallback } from 'react'
+import ReactDropdown from 'react-dropdown'
 import { MarksHistogram } from  './MarksHistogram'
 import { AxisBottom } from './AxisBottom'
 import { AxisLeft } from './AxisLeft'
+import { Dropdown } from './Dropdown'
+
 
 import { scaleSequential, schemeBlues, format, scaleLog, scaleLinear, scaleThreshold, scaleTime, max, timeFormat, extent, bin, timeMonths, sum, count } from 'd3'
 
@@ -38,8 +41,10 @@ const attributes = {
   FAMILIES_WITHOUT_CHILDREN: { id: 11, value: 'FAMILIES_WITHOUT_CHILDREN', label: 'Median Income: Families without Children', domainMin: 1, yColorScale: [20000,40000,60000,80000,100000,120000,140000,160000,180000,200000] },
 }
 
+  const attributeOptions = Object.keys(attributes)
+
   const initialXAttribute = 'ALL_HOUSEHOLDS'
-  const initialYAttribute = 'PERCENT_POSITIVE'
+  const initialYAttribute = 'POP_DENOMINATOR'
   const [xAttribute, setXAttribute] = useState(initialXAttribute)
   const [yAttribute, setYAttribute] = useState(initialYAttribute)
 
@@ -51,9 +56,10 @@ const attributes = {
 
   const siFormat = format('.2s');
   const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
+  const yAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
 
 
-  console.log('check xAxisLabel', xAxisLabel)
+  console.log('check xAxisLabel', yAxisLabel)
   if (!covidData) {
     return <pre>Loading...</pre>
   }
@@ -84,41 +90,64 @@ const attributes = {
   console.log('covid data count', count(covidData, xValue))
 
 return(
-  <svg width={width} height={height}>
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        <AxisBottom
-          xScale={xScale}
-          innerHeight={innerHeight}
-          tickFormat={xAxisTickFormat}
-          tickOffset={8}
-        />
-        <text
-          className="axis-label"
-          textAnchor="middle"
-          transform={`translate(${-yAxisLabelOffset},${innerHeight /
-            2}) rotate(-90)`}
-        >
-          {yAxisLabel}
-        </text>
-        <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={5} />
-        <text
-          className="axis-label"
-          x={innerWidth / 2}
-          y={innerHeight + xAxisLabelOffset}
-          textAnchor="middle"
-        >
-          {xAxisLabel}
-        </text>
-        <MarksHistogram
-          binnedData={binnedData}
-          xScale={xScale}
-          yScale={yScale}
-          tooltipFormat={d => d}
-          circleRadius={2}
-          innerHeight={innerHeight}
-        />
-      </g>
-    </svg>
+  <>
+  <div className="menus-container">
+    <span className="dropdown-label">x</span>
+    <ReactDropdown
+      options={attributeOptions}
+      value={xAttribute}
+      onChange={({ value }) => setXAttribute(value)}
+     />
+   <span className="dropdown-label">y</span>
+    <ReactDropdown
+      options={attributeOptions}
+      value={yAttribute}
+      onChange={({ value }) => setYAttribute(value)}
+    />
+  </div>
+  <div className="chart-container">
+    <svg width={width} height={height}>
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          <AxisBottom
+            xScale={xScale}
+            innerHeight={innerHeight}
+            tickFormat={xAxisTickFormat}
+            tickOffset={8}
+          />
+          <text
+            className="axis-label"
+            textAnchor="middle"
+            transform={`translate(${-yAxisLabelOffset},${innerHeight /
+              2}) rotate(-90)`}
+          >
+            {yAxisLabel}
+          </text>
+          <AxisLeft
+            yScale={yScale}
+            innerWidth={innerWidth}
+            tickFormat={yAxisTickFormat}
+            tickOffset={5}
+            />
+          <text
+            className="axis-label"
+            x={innerWidth / 2}
+            y={innerHeight + xAxisLabelOffset}
+            textAnchor="middle"
+          >
+            {xAxisLabel}
+          </text>
+          <MarksHistogram
+            binnedData={binnedData}
+            xScale={xScale}
+            yScale={yScale}
+            tooltipFormat={d => d}
+            circleRadius={2}
+            innerHeight={innerHeight}
+          />
+        </g>
+      </svg>
+    </div>
+  </>
 )}
 
 // <MarksHistogram

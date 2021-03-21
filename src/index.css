@@ -35,3 +35,27 @@ pre {
   font-size: 1em;
   fill: #635F5D;
 }
+
+.menus-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  margin-right: 60px;
+}
+ .dropdown-label {
+  font-size: 1em;
+  fill: #635F5D;
+  color: #635F5D;
+  margin-left: 50px;
+  margin-right: 15px;
+}
+.Dropdown-root {
+  font-size: 1em;
+  width: 300px;
+  display: inline-block;
+}
+.Dropdown-menu {
+  max-height: 400px;
+  max-width: 300px;
+}
