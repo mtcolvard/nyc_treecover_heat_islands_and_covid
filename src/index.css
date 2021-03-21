@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -13,5 +14,24 @@ code {
 }
 
 .marks-histogram {
+  fill: #137B80;
+}
 
+
+/* body {
+  font-family: 'Poppins', sans-serif;
+} */
+
+pre {
+  font-size: 7em;
+}
+.tick line {
+  stroke: #C0C0BB;
+}
+.tick text {
+  fill: #635F5D;
+}
+.axis-label {
+  font-size: 1em;
+  fill: #635F5D;
 }

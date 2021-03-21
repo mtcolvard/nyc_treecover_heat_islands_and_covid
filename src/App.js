@@ -24,20 +24,23 @@ const App = () => {
   }
 
   return (
-    <>
-      <svg width={width} height={height}>
-        <NycMap
-          covidData={covidData}
-          hoveredValue={hoveredValue}
-          boundaries={boundaries}
-          width={width}
-          height={height}
-        />
         <TreeHistogram
         covidData={covidData}/>
-      </svg>
-    </>
   )
 }
 
 export default App
+
+// <>
+//   <svg width={width} height={height}>
+//     <NycMap
+//       covidData={covidData}
+//       hoveredValue={hoveredValue}
+//       boundaries={boundaries}
+//       width={width}
+//       height={height}
+//     />
+//     <TreeHistogram
+//     covidData={covidData}/>
+//   </svg>
+// </>

@@ -1,4 +1,4 @@
-
+import { TreeHistogram } from './TreeHistogram'
 export const MarksHistogram = ({
   binnedData,
   xScale,
@@ -6,14 +6,14 @@ export const MarksHistogram = ({
   tooltipFormat,
   innerHeight
 }) =>
-  binnedData.map(d => {
+  binnedData.map(d => (
     <rect
       className="marks-histogram"
-      x={xScale(d.x)}
+      x={xScale(d.x0)}
       y={yScale(d.y)}
       width={xScale(d.x1) - xScale(d.x0)}
-      height={innerHeight = yScale(d.y)}
+      height={innerHeight - yScale(d.y)}
     >
-    <title>{tooltipFormat(d.y)}</title>
+      <title>{tooltipFormat(d.y)}</title>
     </rect>
-  })
+  ))
