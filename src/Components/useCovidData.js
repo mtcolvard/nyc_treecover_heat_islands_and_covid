@@ -24,6 +24,5 @@ import { csv } from 'd3'
   export const useCovidData = () => {
     const [covidData, setCovidData] = useState(null)
     useEffect(() => { csv(csvUrl, row).then(setCovidData)}, [])
-    console.log('covidData',covidData)
     return covidData
   }
