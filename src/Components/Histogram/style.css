@@ -1,0 +1,9 @@
+.histogram-marks {
+  fill: #137B80;
+  opacity: 0.8;
+}
+
+.axis-label {
+  font-size: 1em;
+  fill: #635F5D;
+}

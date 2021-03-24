@@ -2,8 +2,6 @@ import {
   geoEquirectangular,
   geoPath,
 } from 'd3'
-import { json } from 'd3'
-import { feature, mesh } from 'topojson'
 
 const missingDataColor = 'rgba(0, 140, 255, 0)'
 
@@ -27,11 +25,12 @@ export const MapFill = ({
       {neighborhood.features.map((feature, i) => {
         const cityZip = +feature.properties.MODZCTA
         const d = rowByCity.get(cityZip)
+        const dCheck = d ? colorScale(colorValue(d)) : missingDataColor
         return <path
-          key={i}
-          onMouseEnter={() => { onHover(d) }}
+          key={cityZip}
+          onMouseEnter={() => { onHover([d, dCheck]) }}
           onMouseOut={() => { onHover(null) }}
-          fill={d ? colorScale(colorValue(d)) : missingDataColor}
+          fill={dCheck}
           d={path(feature)}
         />
       })}

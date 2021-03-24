@@ -1,5 +1,4 @@
-import { TreeHistogram } from './TreeHistogram'
-export const MarksHistogram = ({
+export const HistogramMarks = ({
   binnedData,
   xScale,
   yScale,
@@ -8,7 +7,8 @@ export const MarksHistogram = ({
 }) =>
   binnedData.map(d => (
     <rect
-      className="marks-histogram"
+      className="histogram-marks"
+      key={d.y + d.x0}
       x={xScale(d.x0)}
       y={yScale(d.y)}
       width={xScale(d.x1) - xScale(d.x0)}

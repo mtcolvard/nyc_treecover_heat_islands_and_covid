@@ -4,14 +4,7 @@ import { MapFill } from './MapFill'
 
 import { interpolateBlues, schemeBlues, scaleThreshold, scalePow, scaleQuantize, scaleSequential, scaleSequentialLog, scaleSequentialQuantile, scaleLinear, scaleLog, max, extent } from 'd3'
 
-export const NycMap = ({ boundaries, covidData, width, height, mousePosition }) => {
-
-  const [hoveredValue, setHoveredValue] = useState(null)
-  console.log('hoveredValue', hoveredValue)
-
-  const handleSetHoveredValue = useCallback((d) => {
-    d ? setHoveredValue(d) : setHoveredValue(null)
-  }, [])
+export const NycMap = ({ boundaries, covidData, width, height, mousePosition, sendHoveredValue }) => {
 
   const rowByCity = new Map()
     covidData.forEach(d => {
@@ -24,8 +17,6 @@ export const NycMap = ({ boundaries, covidData, width, height, mousePosition }) 
     .domain([4,6,8,10,12,14,16,18,20])
     .range(schemeBlues[9])
 
-
-  console.log(mousePosition.y)
   return(
       <MapFill
       boundaries={boundaries}
@@ -34,7 +25,7 @@ export const NycMap = ({ boundaries, covidData, width, height, mousePosition }) 
       height={height}
       colorScale={colorScale}
       colorValue={colorValue}
-      onHover={handleSetHoveredValue}
+      onHover={sendHoveredValue}
       />
   )
 }

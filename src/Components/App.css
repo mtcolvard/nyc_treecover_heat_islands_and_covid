@@ -6,10 +6,6 @@ pre {
   font-size: 7em;
 }
 
-.marks-histogram {
-  fill: #137B80;
-}
-
 .tick line {
   stroke: #C0C0BB;
 }
