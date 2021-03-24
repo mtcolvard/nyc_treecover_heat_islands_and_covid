@@ -105,14 +105,14 @@ return(
         tooltipFormat={d => d}
       />
       <ScatterMarks
-        data={[hoveredValue[0]]}
+        data={[hoveredValue]}
         xValue={xValue}
         yValue={yValue}
         xScale={xScale}
         yScale={yScale}
         circleRadius={circleRadius}
-        fillColor={hoveredValue[1]}
-        opacity={1}
+        fillColor={'#08519C'}
+        opacity={ hoveredValue !== {null:null} ? 1 : 0}
         tooltipFormat={d => d}
       />
     </g>

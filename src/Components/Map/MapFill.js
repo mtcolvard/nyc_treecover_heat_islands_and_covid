@@ -25,12 +25,11 @@ export const MapFill = ({
       {neighborhood.features.map((feature, i) => {
         const cityZip = +feature.properties.MODZCTA
         const d = rowByCity.get(cityZip)
-        const dCheck = d ? colorScale(colorValue(d)) : missingDataColor
         return <path
           key={cityZip}
-          onMouseEnter={() => { onHover([d, dCheck]) }}
+          onMouseEnter={() => { onHover(d) }}
           onMouseOut={() => { onHover(null) }}
-          fill={dCheck}
+          fill={d ? colorScale(colorValue(d)) : missingDataColor}
           d={path(feature)}
         />
       })}

@@ -20,9 +20,9 @@ const App = () => {
   // const mousePosition = useMousePosition()
   const mousePosition = [0, 0]
 
-  const [hoveredValue, setHoveredValue] = useState([{null:null}, null])
+  const [hoveredValue, setHoveredValue] = useState({null:null})
   const handleSetHoveredValue = useCallback((d) => {
-    d ? setHoveredValue(d) : setHoveredValue([{null:null}, null])
+    d ? setHoveredValue(d) : setHoveredValue({null:null})
   }, [])
 
   console.log('hoveredValue', hoveredValue)

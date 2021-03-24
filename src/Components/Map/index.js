@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import { schemeBlues, scaleThreshold } from 'd3'
 import { MapFill } from './MapFill'
 // import { useMousePosition } from './useMousePosition'
-
-import { interpolateBlues, schemeBlues, scaleThreshold, scalePow, scaleQuantize, scaleSequential, scaleSequentialLog, scaleSequentialQuantile, scaleLinear, scaleLog, max, extent } from 'd3'
 
 export const NycMap = ({ boundaries, covidData, width, height, mousePosition, sendHoveredValue }) => {
 
@@ -18,15 +17,15 @@ export const NycMap = ({ boundaries, covidData, width, height, mousePosition, se
     .range(schemeBlues[9])
 
   return(
-      <MapFill
-      boundaries={boundaries}
-      rowByCity={rowByCity}
-      width={width}
-      height={height}
-      colorScale={colorScale}
-      colorValue={colorValue}
-      onHover={sendHoveredValue}
-      />
+    <MapFill
+    boundaries={boundaries}
+    rowByCity={rowByCity}
+    width={width}
+    height={height}
+    colorScale={colorScale}
+    colorValue={colorValue}
+    onHover={sendHoveredValue}
+    />
   )
 }
 
