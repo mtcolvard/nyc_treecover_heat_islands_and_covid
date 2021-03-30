@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { csv } from 'd3'
 
-  const csvUrl = 'https://gist.githubusercontent.com/mtcolvard/341f5b92bf3b6edc9c991d668b56e2e4/raw/c5d932fbc32290e4e556405ebd68767b99116fa2/COVID%2520and%2520Income.csv'
-
+  const csvUrl = 'https://gist.githubusercontent.com/mtcolvard/d64937111f2ced60077955d2d01152ba/raw/71ccd07f4b0209cf52876db40bda432beb420e05/NYC_COVID_Trees_Temp_by_MODZCTA.csv'
   const row = d => {
     d.MODIFIED_ZCTA = +d['MODIFIED_ZCTA']
     d.lat = +d['lat']
@@ -18,6 +17,16 @@ import { csv } from 'd3'
     d.FAMILIES = +d['Families']
     d.FAMILIES_WITH_CHILDREN = +d['Families with Children']
     d.FAMILIES_WITHOUT_CHILDREN = +d['Families without Children']
+    d.area = +d['area']
+    d.count = +d['count']
+    d.sum = +d['sum']
+    d.mean = +d['mean']
+    d.median = +d['median']
+    d.stdev = +d['stdev']
+    d.range = +d['range']
+    d.majority = +d['majority']
+    d.variance = +d['variance']
+    d.treesPerMilesq = +d['treesPerMilesq']
     return d
   }
 

@@ -3,12 +3,7 @@ import { schemeBlues, scaleThreshold } from 'd3'
 import { MapFill } from './MapFill'
 // import { useMousePosition } from './useMousePosition'
 
-export const NycMap = ({ boundaries, covidData, width, height, mousePosition, sendHoveredValue }) => {
-
-  const rowByCity = new Map()
-    covidData.forEach(d => {
-      rowByCity.set(d.MODIFIED_ZCTA, d)
-    })
+export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredValue, hoveredValue, keyedCovidData, covidData }) => {
 
   const colorValue = d => d.PERCENT_POSITIVE
   const colorScale =
@@ -17,17 +12,33 @@ export const NycMap = ({ boundaries, covidData, width, height, mousePosition, se
     .range(schemeBlues[9])
 
   return(
-    <MapFill
-    boundaries={boundaries}
-    rowByCity={rowByCity}
-    width={width}
-    height={height}
-    colorScale={colorScale}
-    colorValue={colorValue}
-    onHover={sendHoveredValue}
-    />
+    <>
+      <MapFill
+      boundaries={boundaries}
+      keyedCovidData={keyedCovidData}
+      width={width}
+      height={height}
+      colorScale={colorScale}
+      colorValue={colorValue}
+      onHover={sendHoveredValue}
+      hoveredValue={hoveredValue}
+      />
+      {hoveredValue && <MapFill
+      boundaries={boundaries}
+      keyedCovidData={keyedCovidData}
+      width={width}
+      height={height}
+      colorScale={colorScale}
+      colorValue={colorValue}
+      onHover={sendHoveredValue}
+      hoveredValue={hoveredValue}
+      />}
+    </>
   )
 }
+
+// covidData={[keyedCovidData.get(hoveredValue)]}
+
 
 // <g transform={`translate(${mousePosition.x}, ${mousePosition.y})`}>
 //   <text>Foo</text>
