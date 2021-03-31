@@ -7,12 +7,13 @@ export const ScatterMarks = ({
   circleRadius,
   fillColor,
   opacity,
-  onHover
+  onHover,
+
 }) =>
 
  data.map((d, i) => {
    return (
-    <g className="scatter-mark-group" >
+    // <g className="scatter-mark-group" >
       <circle
         className="scatter-marks"
         key={d.MODIFIED_ZCTA}
@@ -25,8 +26,14 @@ export const ScatterMarks = ({
         onMouseLeave={() => { onHover(null) }}
       >
       </circle>
-    </g>
+    // </g>
   )})
+  // <title>{d => (d.y)}</title>
+
+  // PROPS
+  // tooltipFormat
+  // tooltipFormat={d => d}
+
 
 
   // colorScale,

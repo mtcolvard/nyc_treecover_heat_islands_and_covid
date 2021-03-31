@@ -22,7 +22,6 @@ export const MapFill = ({
     .center([-73.95, 40.74])
     .fitSize([width, height], neighborhood)
   const path = geoPath(projection)
-  console.log(neighborhood)
 
   return (
     <g className="map-fill">
@@ -35,6 +34,7 @@ export const MapFill = ({
           onMouseOut={() => { onHover(null) }}
           // fill={d ? colorScale(colorValue(d)) : missingDataColor}
           fill={cityZip === hoveredValue ? 'black' : (d  ? colorScale(colorValue(d)) : missingDataColor)}
+          // fill={hoveredValue.includes(cityZip) ? 'black' : (d  ? colorScale(colorValue(d)) : missingDataColor)}
           d={path(feature)}
 
         />

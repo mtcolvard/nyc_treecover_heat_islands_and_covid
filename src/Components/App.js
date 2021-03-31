@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import mapboxgl from 'mapbox-gl'
 import ReactDropdown from 'react-dropdown'
 import './App.css'
 import { useBoundaries } from './useBoundaries'
 import { useCovidData } from './useCovidData'
 import { useMousePosition } from './useMousePosition'
-import { TreeHistogram } from './Histogram/index'
+import { Histogram } from './Histogram/index'
 import { NycMap } from './Map/index'
 import { ScatterPlot } from './Scatter/index'
-import { Dropdown } from './Dropdown' 
+import { Dropdown } from './Dropdown'
+import { BinnedScatter } from './BinnedScatter/index'
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
 
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
@@ -24,17 +27,18 @@ const attributes = {
   area: {id:12, value:'area', label: 'area', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   count: {id:13, value:'count', label: 'count', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   sum: {id:14, value:'sum', label: 'sum', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
-  mean: {id:15, value:'mean', label: 'mean', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
-  median: {id:16, value:'median', label: 'median', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
+  mean: {id:15, value:'mean', label: 'mean', domainMin: 80, ycolorScale: [80,82,84,86,88,90,92,94,96,98,100]},
+  median: {id:16, value:'median', label: 'median', domainMin: 80, ycolorScale: [80,82,84,86,88,90,92,94,96,98,100]},
   stdev: {id:17, value:'stdev', label: 'stdev', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   range: {id:18, value:'range', label: 'range', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   majority: {id:19, value:'majority', label: 'majority', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   variance: {id:20, value:'variance', label: 'variance', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   treesPerMilesq: {id:21, value:'treesPerMilesq', label: 'treesPerMilesq', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
+  MODIFIED_ZCTA: {id:22, value:'MODIFIED_ZCTA', label: 'MODIFIED_ZCTA', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
 }
 
 const mainWidth = 1280
-const mainHeight = 700
+const mainHeight = 1280
 const dropdownWidth = 40
 const dropdownHeight = 160
 const margin = { top: 20, right: 20, bottom: 20, left:20 }
@@ -49,13 +53,17 @@ const App = () => {
 
   const scatterInitialXAttribute = 'ALL_HOUSEHOLDS'
   const scatterInitialYAttribute = 'PERCENT_POSITIVE'
-  const histogramInitialXAttribute = 'ALL_HOUSEHOLDS'
+  const histogramInitialXAttribute = 'treesPerMilesq'
   const histogramInitialYAttribute = 'PERCENT_POSITIVE'
+  const histogramTwoInitialXAttribute = 'majority'
+  const histogramTwoInitialYAttribute = 'PERCENT_POSITIVE'
 
   const [scatterXAttribute, setScatterXAttribute] = useState(scatterInitialXAttribute)
   const [scatterYAttribute, setScatterYAttribute] = useState(scatterInitialYAttribute)
   const [histogramXAttribute, setHistogramXAttribute] = useState(histogramInitialXAttribute)
   const [histogramYAttribute, setHistogramYAttribute] = useState(histogramInitialYAttribute)
+  const [histogramTwoXAttribute, setHistogramTwoXAttribute] = useState(histogramTwoInitialXAttribute)
+  const [histogramTwoYAttribute, setHistogramTwoYAttribute] = useState(histogramTwoInitialYAttribute)
 
   const mousePosition = [0, 0]
 
@@ -63,19 +71,19 @@ const App = () => {
   const handleSetHoveredValue = useCallback((d) => {
     d ? setHoveredValue(d) : setHoveredValue(null)
   }, [])
+  // const [hoveredValue, setHoveredValue] = useState(null)
+  // const handleSetHoveredValue = useCallback((d) => {
+  //   d ? setHoveredValue([d]) : setHoveredValue(null)
+  // }, [])
 
   if (!boundaries || !covidData) {
     return <pre>Loading...</pre>
   }
 
-  console.log('covidData', covidData)
-
   const keyedCovidData = new Map()
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
-
-    console.log('keyedCovidData', keyedCovidData)
 
   return (
     <>
@@ -91,31 +99,38 @@ const App = () => {
           hoveredValue={hoveredValue}
         />
         <g transform={`translate(${svgWidth/2}, ${svgHeight - graphHeight * svgHeight})`}>
-          <ScatterPlot
+          <Histogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
           width={svgWidth/2}
           height={graphHeight * svgHeight}
           hoveredValue={hoveredValue}
           sendHoveredValue={handleSetHoveredValue}
-          scatterXAttribute={histogramXAttribute}
-          scatterYAttribute={histogramYAttribute}
+          histogramXAttribute={histogramXAttribute}
+          histogramYAttribute={histogramYAttribute}
           attributes={attributes}
+          yScaleMin={0}
+          xScaleMin={0}
           />
         </g>
         <g transform={`translate(0, ${svgHeight - graphHeight * svgHeight})`}>
-          <ScatterPlot
+          <Histogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
           width={svgWidth/2}
           height={graphHeight * svgHeight}
           hoveredValue={hoveredValue}
           sendHoveredValue={handleSetHoveredValue}
-          scatterXAttribute={scatterXAttribute}
-          scatterYAttribute={scatterYAttribute}
+          histogramXAttribute={histogramTwoXAttribute}
+          histogramYAttribute={histogramTwoYAttribute}
           attributes={attributes}
+          yScaleMin={0}
+          xScaleMin={86}
           />
         </g>
+
+
+
       </svg>
       <div className="menus-container">
           <span className="dropdown-label">x</span>
@@ -148,8 +163,29 @@ const App = () => {
 }
 export default App
 
+
+// <g transform={`translate(0, ${svgHeight - graphHeight * svgHeight})`}>
+//   <ScatterPlot
+//   covidData={covidData}
+//   keyedCovidData={keyedCovidData}
+//   width={svgWidth/2}
+//   height={graphHeight * svgHeight}
+//   hoveredValue={hoveredValue}
+//   sendHoveredValue={handleSetHoveredValue}
+//   scatterXAttribute={scatterXAttribute}
+//   scatterYAttribute={scatterYAttribute}
+//   attributes={attributes}
+//   yScaleMin={0}
+//   xScaleMin={90}
+//   />
+// </g>
+
+
+
+
+
 // <g transform={`translate(${svgWidth/2}, ${svgHeight - graphHeight * svgHeight})`}>
-//   <TreeHistogram
+//   <BinnedScatter
 //   covidData={covidData}
 //   keyedCovidData={keyedCovidData}
 //   width={svgWidth/2}
@@ -159,5 +195,7 @@ export default App
 //   histogramXAttribute={histogramXAttribute}
 //   histogramYAttribute={histogramYAttribute}
 //   attributes={attributes}
+//   yScaleMin={0}
+//   xScaleMin={0}
 //   />
 // </g>

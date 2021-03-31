@@ -5,7 +5,7 @@ import { AxisLeft } from './AxisLeft'
 import { ScatterMarks }  from  './Marks'
 import { max, format, scaleLinear, extent } from 'd3'
 
-export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredValue, sendHoveredValue, scatterXAttribute, scatterYAttribute, attributes }) => {
+export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredValue, sendHoveredValue, scatterXAttribute, scatterYAttribute, attributes, xScaleMin, yScaleMin }) => {
 
   const circleRadius = 8
   const fadeOpacity = 0.3
@@ -27,14 +27,22 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
   const yValue = d => d[scatterYAttribute]
 
   const xScale = scaleLinear()
-    .domain([0, max(covidData, xValue)])
+    .domain([xScaleMin, max(covidData, xValue)])
+    // .domain(extent(covidData, xValue))
     .range([0, innerWidth])
     .nice()
 
   const yScale = scaleLinear()
-    .domain([0, max(covidData, yValue)])
+    .domain([yScaleMin, max(covidData, yValue)])
+    // .domain(extent(covidData, yValue))
     .range([innerHeight, 0])
     .nice()
+
+  // const hoveredValueDataArray = hoveredValue.map(d =>
+  //   keyedCovidData.get(d))
+  // console.log('hoveredValueDataArray', hoveredValueDataArray)
+
+  // console.log('keyedCovidData', [keyedCovidData.get(hoveredValue)])
 
 return(
   <>
@@ -78,7 +86,6 @@ return(
         fillColor={'#137B80'}
         opacity={0.3}
         onHover={sendHoveredValue}
-        // tooltipFormat={d => d}
       />
       {hoveredValue && <ScatterMarks
         data={[keyedCovidData.get(hoveredValue)]}
@@ -89,8 +96,20 @@ return(
         circleRadius={circleRadius}
         fillColor={'#08519C'}
         opacity={1}
-        // tooltipFormat={d => d}
       />}
+
     </g>
   </>
 )}
+
+
+// {hoveredValue && <ScatterMarks
+//   data={hoveredValueDataArray}
+//   xValue={xValue}
+//   yValue={yValue}
+//   xScale={xScale}
+//   yScale={yScale}
+//   circleRadius={circleRadius}
+//   fillColor={'#08519C'}
+//   opacity={1}
+// />}

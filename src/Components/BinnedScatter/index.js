@@ -1,13 +1,13 @@
 import React, { useState , useCallback } from 'react'
 import ReactDropdown from 'react-dropdown'
 import './style.css'
-import { HistogramMarks } from  './Marks'
+import { Marks } from  './Marks'
 import { AxisBottom } from './AxisBottom'
 import { AxisLeft } from './AxisLeft'
 import { Dropdown } from './Dropdown'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
-export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, yScaleMin }) => {
+export const BinnedScatter = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, yScaleMin }) => {
 
   const margin = { top: 20, right: 20, bottom: 65, left: 60 }
   const innerHeight = height - margin.top - margin.bottom
@@ -36,7 +36,7 @@ export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredV
     .thresholds(xScale.ticks(14))
     (covidData)
     .map(array => ({
-      y: mean(array, yValue),
+      y: yValue,
       // y: sum(array, yValue),
       x0: array.x0,
       x1: array.x1
@@ -47,6 +47,13 @@ export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredV
     .domain([yScaleMin, max(binnedData, d => d.y)])
     .range([innerHeight, 0])
     .nice()
+
+  // const yScale = scaleLinear()
+  //   .domain([yScaleMin, max(covidData, yValue)])
+  //   // .domain(extent(covidData, yValue))
+  //   .range([innerHeight, 0])
+  //   .nice()
+
 
 return(
   <>
@@ -80,7 +87,7 @@ return(
           >
             {xAxisLabel}
           </text>
-          <HistogramMarks
+          <Marks
             binnedData={binnedData}
             xScale={xScale}
             yScale={yScale}

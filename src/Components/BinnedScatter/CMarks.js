@@ -8,11 +8,11 @@ export const HistogramMarks = ({
   binnedData.map(d => (
     <rect
       className="histogram-marks"
-      key={d.x0}
+      key={d.y + d.x0}
       x={xScale(d.x0)}
       y={yScale(d.y)}
       width={xScale(d.x1) - xScale(d.x0)}
-      height={d.y ? innerHeight - yScale(d.y) : innerHeight - yScale(0)}
+      height={innerHeight - yScale(d.y)}
     >
       <title>{tooltipFormat(d.y)}</title>
     </rect>
