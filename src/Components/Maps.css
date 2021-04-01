@@ -1,0 +1,39 @@
+html {
+  height: 100%;
+
+}
+body {
+  height: 100%;
+}
+
+.divZero {
+  height: 100%;
+}
+
+.divOne {
+  position: relative;
+  height: 100%;
+}
+
+.divTwo {
+  position: relative;
+  height: 100%;
+}
+
+.map-container {
+  position: relative;
+}
+
+.mapboxgl-canvas-container {
+  position: relative;
+}
+
+.mapboxgl-canvas {
+  position: relative;
+}
+
+.divThree {
+  position: relative;
+  bottom: 0px;
+  width: 100%;
+}

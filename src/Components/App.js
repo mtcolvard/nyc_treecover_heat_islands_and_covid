@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import mapboxgl from 'mapbox-gl'
 import ReactDropdown from 'react-dropdown'
 import './App.css'
 import { useBoundaries } from './useBoundaries'
@@ -10,7 +9,7 @@ import { NycMap } from './Map/index'
 import { ScatterPlot } from './Scatter/index'
 import { Dropdown } from './Dropdown'
 import { BinnedScatter } from './BinnedScatter/index'
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
+import { Maps } from './Maps'
 
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
@@ -87,6 +86,10 @@ const App = () => {
 
   return (
     <>
+      <div>
+        <div className="divZero">Maps</div>
+        <Maps />
+      </div>
       <svg width={svgWidth} height={svgHeight} margin={20}>
         <NycMap
           boundaries={boundaries}
