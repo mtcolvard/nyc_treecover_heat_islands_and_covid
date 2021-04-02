@@ -10,6 +10,27 @@ pre {
   margin: 20;
 } */
 
+h1 {
+font-size:2em;
+text-align: center;
+}
+
+h2 {
+  font-size:1rem;
+}
+
+.headline {
+  margin:20px;
+}
+
+.headline-indent {
+  padding-left: 40px;
+  padding-top: 0.75em;
+}
+/* text {
+        font-size: 2em;
+      } */
+
 .tick line {
   stroke: #C0C0BB;
 }
@@ -48,6 +69,8 @@ pre {
 .svg-iframe-container {
   display: inline-flex;
   margin-left: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .svg-graph {
