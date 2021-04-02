@@ -7,6 +7,7 @@ mapboxgl.accessToken='pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNrbXpjMXV2dzAxOW4ycHBiZDB
 
 export const Maps = () => {
   const mapContainerRef = useRef(null)
+  // const [active, setActive] = useState(true)
   const [map, setMap] = useState(null)
 
   useEffect(() => {
@@ -20,16 +21,88 @@ export const Maps = () => {
 
   map.on('load', () => {
     map.addSource('temperatureRaster', {
-      'type': 'vector',
+      'type': 'raster',
       'url': 'mapbox://mtcolvard.abtfqj2f',
     })
 
     map.addLayer({
-    'id': 'temperatureRaster',
-    'type': 'fill',
+    'id': 'temperatureRasterLayer',
+    'type': 'raster',
     'source': 'temperatureRaster',
+    'layout': {'visibility': 'visible'
+    },
     'source-layer': 'whiteback',
     })
+
+    map.addSource('modzctaVector', {
+      'type': 'vector',
+      'url': 'mapbox://mtcolvard.c01qzd4e',
+    })
+
+    map.addLayer({
+    'id': 'modzctaVectorLayer',
+    'type': 'fill',
+    'source': 'modzctaVector',
+    'layout': {'visibility': 'visible'
+    },
+    'source-layer': 'modzcta-1m1hy2',
+    })
+
+
+
+    // map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'none')
+    // map.setPaintProperty('temperatureRasterLayer', 'raster-opacity', 0)
+  map.on('idle', function () {
+    // If these two layers have been added to the style,
+    // add the toggle buttons.
+    if (map.getLayer('temperatureRasterLayer') && map.getLayer('modzctaVectorLayer')) {
+      // Enumerate ids of the layers.
+      var toggleableLayerIds = ['temperatureRasterLayer', 'modzctaVectorLayer']
+      // Set up the corresponding toggle button for each layer.
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i]
+        if (!document.getElementById(id)) {
+          // Create a link.
+          var link = document.createElement('a')
+          link.id = id
+          link.href = '#'
+          link.textContent = id
+          link.className = 'active'
+          // Show or hide layer when the toggle is clicked.
+          link.onclick = function (e) {
+            var clickedLayer = this.textContent
+            e.preventDefault()
+            e.stopPropagation()
+
+            var visibility = map.getLayoutProperty(
+              clickedLayer,
+              'visibility'
+            )
+
+            // Toggle layer visibility by changing the layout object's visibility property.
+            if (visibility === 'visible') {
+              map.setLayoutProperty(
+                clickedLayer,
+                'visibility',
+                'none'
+              )
+              this.className = ''
+            } else {
+              this.className = 'active'
+              map.setLayoutProperty(
+                clickedLayer,
+                'visibility',
+                'visible'
+              )
+            }
+          }
+
+          var layers = document.getElementById('menu')
+          layers.appendChild(link)
+        }
+      }
+    }
+  })
 
 
       setMap(map)
@@ -37,8 +110,30 @@ export const Maps = () => {
     return () => map.remove()
   }, [])
 
+
+  // useEffect(() => {
+  //   paint()
+  // },[])
+  //
+  // const paint = () => {
+  //   if(map) {
+  //     // map.setPaintProperty('temperatureRasterLayer', 'raster-opacity', 1)
+  //     map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'none')
+  //   }
+  // }
+  //
+  // const changeState = i => {
+  //   setActive(!active)
+  // }
+
+
+
   return(
+    <>
+    <nav id="menu"></nav>
+    <div id="map"></div>
     <div ref={mapContainerRef}/>
+    </>
   )
 }
 
