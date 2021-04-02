@@ -98,13 +98,17 @@ const App = () => {
     //   <div className="divZero">Maps</div>
     //   <Maps />
     // </div>
+
+
+// Extent
+// -74.2555880000000030,40.4961150000000032 : -73.7000110000000035,40.9155319999999989
+
   return (
     <>
       <div className="svg-iframe-container">
         <div className="sideBySide" transform={`translate(0, 0)`}>
           <iframe
-            src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ`}
-
+            src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ#9.32/40.687/-73.963`}
 
             width={`${svgWidth/2}`} height={svgHeight/2} title='NYC Heat Islands, Foliage, and Covid'>
           </iframe>
@@ -127,7 +131,7 @@ const App = () => {
         </g>
       </svg>
         <svg width={svgWidth} height={svgHeight/2} margin={20}>
-          <g transform={`translate(${svgWidth/2}, 0)`}>
+          <g transform={`translate(${svgWidth/3}, 0)`}>
             <Histogram
             covidData={covidData}
             keyedCovidData={keyedCovidData}
