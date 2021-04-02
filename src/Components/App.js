@@ -36,8 +36,8 @@ const attributes = {
   MODIFIED_ZCTA: {id:22, value:'MODIFIED_ZCTA', label: 'MODIFIED_ZCTA', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
 }
 
-const mainWidth = 1100
-const mainHeight = 1100
+const mainWidth = window.innerWidth
+const mainHeight = window.innerHeight
 const dropdownWidth = 40
 const dropdownHeight = 160
 const margin = { top: 20, right: 20, bottom: 20, left:20 }
@@ -91,6 +91,8 @@ const App = () => {
     //   <div className="divZero">Maps</div>
     //   <Maps />
     // </div>
+
+
   return (
     <>
       <div className="svg-iframe-container">
@@ -118,8 +120,8 @@ const App = () => {
           />
         </g>
       </svg>
-        <svg width={svgWidth} height={svgWidth} margin={20}>
-          <g transform={`translate(${graph3XTranslate}, 0)`}>
+        <svg className={"three-graphs"} width={svgWidth} height={svgWidth} margin={20}>
+          <g  transform={`translate(${graph3XTranslate}, 0)`}>
             <Histogram
             covidData={covidData}
             keyedCovidData={keyedCovidData}
@@ -134,7 +136,7 @@ const App = () => {
             xScaleMin={0}
             />
           </g>
-          <g transform={`translate(${graph2XTranslate}, 0)`}>
+          <g  transform={`translate(${graph2XTranslate}, 0)`}>
             <Histogram
             covidData={covidData}
             keyedCovidData={keyedCovidData}
@@ -149,7 +151,7 @@ const App = () => {
             xScaleMin={86}
             />
           </g>
-          <g transform={`translate(${graph1XTranslate}, 0)`}>
+          <g  transform={`translate(${graph1XTranslate}, 0)`}>
             <ScatterPlot
             covidData={covidData}
             keyedCovidData={keyedCovidData}
@@ -165,36 +167,39 @@ const App = () => {
             />
           </g>
         </svg>
-      <div className="menus-container">
-          <span className="dropdown-label">x</span>
-          <ReactDropdown
-            options={attributeOptions}
-            value={scatterXAttribute}
-            onChange={({ value }) => setScatterXAttribute(value)}
-           />
-         <span className="dropdown-label">y</span>
-          <ReactDropdown
-            options={attributeOptions}
-            value={scatterYAttribute}
-            onChange={({ value }) => setScatterYAttribute(value)}
-          />
-          <span className="dropdown-label">x</span>
-          <ReactDropdown
-            options={attributeOptions}
-            value={histogramXAttribute}
-            onChange={({ value }) => setHistogramXAttribute(value)}
-           />
-         <span className="dropdown-label">y</span>
-          <ReactDropdown
-            options={attributeOptions}
-            value={histogramYAttribute}
-            onChange={({ value }) => setHistogramYAttribute(value)}
-          />
-        </div>
     </>
   )
 }
 export default App
+
+
+// <div className="menus-container">
+//     <span className="dropdown-label">x</span>
+//     <ReactDropdown
+//       options={attributeOptions}
+//       value={scatterXAttribute}
+//       onChange={({ value }) => setScatterXAttribute(value)}
+//      />
+//    <span className="dropdown-label">y</span>
+//     <ReactDropdown
+//       options={attributeOptions}
+//       value={scatterYAttribute}
+//       onChange={({ value }) => setScatterYAttribute(value)}
+//     />
+//     <span className="dropdown-label">x</span>
+//     <ReactDropdown
+//       options={attributeOptions}
+//       value={histogramXAttribute}
+//       onChange={({ value }) => setHistogramXAttribute(value)}
+//      />
+//    <span className="dropdown-label">y</span>
+//     <ReactDropdown
+//       options={attributeOptions}
+//       value={histogramYAttribute}
+//       onChange={({ value }) => setHistogramYAttribute(value)}
+//     />
+//   </div>
+
 // transform={`translate(${svgWidth/2}, 0)`}
 // <g transform={`translate(0, 0)`}>
 // <Histogram

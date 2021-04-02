@@ -22,8 +22,8 @@ export const ScatterMarks = ({
         r={circleRadius}
         fill={fillColor}
         opacity={opacity}
-        onMouseOver={() => { onHover(d.MODIFIED_ZCTA) }}
-        onMouseLeave={() => { onHover(null) }}
+        // onMouseOver={() => { onHover(d.MODIFIED_ZCTA) }}
+        // onMouseLeave={() => { onHover(null) }}
       >
       </circle>
     // </g>

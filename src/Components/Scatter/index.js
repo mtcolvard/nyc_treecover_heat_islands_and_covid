@@ -16,7 +16,7 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
   const yAxisLabelOffset = 50
 
 
-  const siFormat = format('.2s');
+  const siFormat = format('');
   const percFormat = format('');
   const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B')
   const yAxisTickFormat = tickValue => percFormat(tickValue).replace('G', 'B')
@@ -62,7 +62,7 @@ return(
       >
         {yAxisLabel}
       </text>
-      <AxisLeft
+      <AxisLeft  
         yScale={yScale}
         innerWidth={innerWidth}
         tickFormat={yAxisTickFormat}
@@ -85,9 +85,9 @@ return(
         circleRadius={circleRadius}
         fillColor={'#137B80'}
         opacity={0.3}
-        onHover={sendHoveredValue}
+        // onHover={sendHoveredValue}
       />
-      {hoveredValue && <ScatterMarks
+      {hoveredValue && hoveredValue!==false && <ScatterMarks
         data={[keyedCovidData.get(hoveredValue)]}
         xValue={xValue}
         yValue={yValue}

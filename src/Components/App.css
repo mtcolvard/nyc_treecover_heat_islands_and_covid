@@ -49,3 +49,11 @@ pre {
   display: inline-flex;
   margin-left: 20px;
 }
+
+.svg-graph {
+
+}
+.three-graphs {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
