@@ -41,6 +41,8 @@ const mainHeight = 1280
 const dropdownWidth = 40
 const dropdownHeight = 160
 const margin = { top: 20, right: 20, bottom: 20, left:20 }
+const svgMapWidth = mainWidth - dropdownWidth
+const svgMapHeight = mainHeight - dropdownHeight
 const svgWidth = mainWidth - dropdownWidth
 const svgHeight = mainHeight - dropdownHeight
 const graphHeight = 0.5
@@ -83,58 +85,76 @@ const App = () => {
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
+    //
 
+
+    // <div>
+    //   <div className="divZero">Maps</div>
+    //   <Maps />
+    // </div>
   return (
     <>
-      <div>
-        <div className="divZero">Maps</div>
-        <Maps />
+      <div className="svg-iframe-container">
+        <div className="sideBySide" transform={`translate(0, 0)`}>
+          <iframe
+            src='https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
+'
+            // src='https://api.mapbox.com//styles/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?title=true&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNrbXpjMXV2dzAxOW4ycHBiZDB1NzE0amsifQ.p28rFaL7eqlLVZ0hdS-t_w#10/40.716/-73.971'
+
+// https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=copy&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
+
+            width={`${svgWidth/2}`} height={svgHeight/2} title='NYC Heat Islands, Foliage, and Covid'>
+          </iframe>
+        </div>
       </div>
-      <svg width={svgWidth} height={svgHeight} margin={20}>
-        <NycMap
-          boundaries={boundaries}
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={svgWidth}
-          height={(1 - graphHeight) * svgHeight}
-          mousePosition={mousePosition}
-          sendHoveredValue={handleSetHoveredValue}
-          hoveredValue={hoveredValue}
-        />
-        <g transform={`translate(${svgWidth/2}, ${svgHeight - graphHeight * svgHeight})`}>
-          <Histogram
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={svgWidth/2}
-          height={graphHeight * svgHeight}
-          hoveredValue={hoveredValue}
-          sendHoveredValue={handleSetHoveredValue}
-          histogramXAttribute={histogramXAttribute}
-          histogramYAttribute={histogramYAttribute}
-          attributes={attributes}
-          yScaleMin={0}
-          xScaleMin={0}
+
+      <svg className="sideBySide" width={svgWidth/2} height={svgHeight/2} margin={0}>
+        <g
+        transform={`translate(0, 0)`}>
+          <NycMap
+            boundaries={boundaries}
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={svgWidth/2}
+            height={(1 - graphHeight) * svgHeight}
+            mousePosition={mousePosition}
+            sendHoveredValue={handleSetHoveredValue}
+            hoveredValue={hoveredValue}
           />
         </g>
-        <g transform={`translate(0, ${svgHeight - graphHeight * svgHeight})`}>
-          <Histogram
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={svgWidth/2}
-          height={graphHeight * svgHeight}
-          hoveredValue={hoveredValue}
-          sendHoveredValue={handleSetHoveredValue}
-          histogramXAttribute={histogramTwoXAttribute}
-          histogramYAttribute={histogramTwoYAttribute}
-          attributes={attributes}
-          yScaleMin={0}
-          xScaleMin={86}
-          />
-        </g>
-
-
-
       </svg>
+        <svg width={svgWidth} height={svgHeight/2} margin={20}>
+          <g transform={`translate(${svgWidth/2}, 0)`}>
+            <Histogram
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={svgWidth/2}
+            height={graphHeight * svgHeight}
+            hoveredValue={hoveredValue}
+            sendHoveredValue={handleSetHoveredValue}
+            histogramXAttribute={histogramXAttribute}
+            histogramYAttribute={histogramYAttribute}
+            attributes={attributes}
+            yScaleMin={0}
+            xScaleMin={0}
+            />
+          </g>
+          <g transform={`translate(0, 0)`}>
+            <Histogram
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={svgWidth/2}
+            height={graphHeight * svgHeight}
+            hoveredValue={hoveredValue}
+            sendHoveredValue={handleSetHoveredValue}
+            histogramXAttribute={histogramTwoXAttribute}
+            histogramYAttribute={histogramTwoYAttribute}
+            attributes={attributes}
+            yScaleMin={0}
+            xScaleMin={86}
+            />
+          </g>
+        </svg>
       <div className="menus-container">
           <span className="dropdown-label">x</span>
           <ReactDropdown
@@ -165,6 +185,22 @@ const App = () => {
   )
 }
 export default App
+// transform={`translate(${svgWidth/2}, 0)`}
+// <g transform={`translate(0, 0)`}>
+// <Histogram
+// covidData={covidData}
+// keyedCovidData={keyedCovidData}
+// width={svgWidth/2}
+// height={graphHeight * svgHeight}
+// hoveredValue={hoveredValue}
+// sendHoveredValue={handleSetHoveredValue}
+// histogramXAttribute={histogramXAttribute}
+// histogramYAttribute={histogramYAttribute}
+// attributes={attributes}
+// yScaleMin={0}
+// xScaleMin={0}
+// />
+// </g>
 
 
 // <g transform={`translate(0, ${svgHeight - graphHeight * svgHeight})`}>

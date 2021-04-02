@@ -131,11 +131,13 @@ export const Maps = () => {
   return(
     <>
     <nav id="menu"></nav>
-    <div id="map"></div>
     <div ref={mapContainerRef}/>
     </>
   )
 }
+
+// <div id="map"></div>
+
 
 
 

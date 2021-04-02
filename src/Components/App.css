@@ -40,3 +40,7 @@ pre {
   max-height: 400px;
   max-width: 300px;
 }
+
+.svg-iframe-container {
+  display: inline-flex;
+}
