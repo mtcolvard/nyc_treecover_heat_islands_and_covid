@@ -47,6 +47,10 @@ const svgWidth = mainWidth - dropdownWidth
 const svgHeight = mainHeight - dropdownHeight
 const graphHeight = 0.5
 
+// const mapboxToken = process.env.REACT_APP_MAPBOX_KEY
+
+// pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
+
 const App = () => {
   const boundaries = useBoundaries()
   const covidData = useCovidData()
@@ -86,7 +90,9 @@ const App = () => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
     //
+    // src='https://api.mapbox.com//styles/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?title=true&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNrbXpjMXV2dzAxOW4ycHBiZDB1NzE0amsifQ.p28rFaL7eqlLVZ0hdS-t_w#10/40.716/-73.971'
 
+// https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=copy&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
 
     // <div>
     //   <div className="divZero">Maps</div>
@@ -97,11 +103,8 @@ const App = () => {
       <div className="svg-iframe-container">
         <div className="sideBySide" transform={`translate(0, 0)`}>
           <iframe
-            src='https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
-'
-            // src='https://api.mapbox.com//styles/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?title=true&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNrbXpjMXV2dzAxOW4ycHBiZDB1NzE0amsifQ.p28rFaL7eqlLVZ0hdS-t_w#10/40.716/-73.971'
+            src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ`}
 
-// https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=copy&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
 
             width={`${svgWidth/2}`} height={svgHeight/2} title='NYC Heat Islands, Foliage, and Covid'>
           </iframe>
