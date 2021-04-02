@@ -6,6 +6,10 @@ pre {
   font-size: 7em;
 }
 
+/* body {
+  margin: 20;
+} */
+
 .tick line {
   stroke: #C0C0BB;
 }
@@ -43,4 +47,5 @@ pre {
 
 .svg-iframe-container {
   display: inline-flex;
+  margin-left: 20px;
 }

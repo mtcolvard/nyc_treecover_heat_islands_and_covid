@@ -36,42 +36,42 @@ const attributes = {
   MODIFIED_ZCTA: {id:22, value:'MODIFIED_ZCTA', label: 'MODIFIED_ZCTA', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
 }
 
-const mainWidth = 1280
-const mainHeight = 1280
+const mainWidth = 1100
+const mainHeight = 1100
 const dropdownWidth = 40
 const dropdownHeight = 160
 const margin = { top: 20, right: 20, bottom: 20, left:20 }
-const svgMapWidth = mainWidth - dropdownWidth
-const svgMapHeight = mainHeight - dropdownHeight
-const svgWidth = mainWidth - dropdownWidth
-const svgHeight = mainHeight - dropdownHeight
-const graphHeight = 0.5
+const mapsWidth = mainWidth
+const mapsHeight = mainHeight
+const svgWidth = mainWidth
+const svgHeight = mainHeight
 
-// const mapboxToken = process.env.REACT_APP_MAPBOX_KEY
+const centerWidth = mainWidth/2
+const graphWidth = mainWidth/3
+const graphHeight = 0.67 * centerWidth
+const graphOffset = mainWidth/6
+const graph3XTranslate = centerWidth + graphOffset
+const graph2XTranslate = centerWidth - graphOffset
+const graph1XTranslate = 0
 
-// pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
 
 const App = () => {
   const boundaries = useBoundaries()
   const covidData = useCovidData()
   const attributeOptions = Object.keys(attributes)
-
   const scatterInitialXAttribute = 'ALL_HOUSEHOLDS'
   const scatterInitialYAttribute = 'PERCENT_POSITIVE'
   const histogramInitialXAttribute = 'treesPerMilesq'
   const histogramInitialYAttribute = 'PERCENT_POSITIVE'
   const histogramTwoInitialXAttribute = 'majority'
   const histogramTwoInitialYAttribute = 'PERCENT_POSITIVE'
-
   const [scatterXAttribute, setScatterXAttribute] = useState(scatterInitialXAttribute)
   const [scatterYAttribute, setScatterYAttribute] = useState(scatterInitialYAttribute)
   const [histogramXAttribute, setHistogramXAttribute] = useState(histogramInitialXAttribute)
   const [histogramYAttribute, setHistogramYAttribute] = useState(histogramInitialYAttribute)
   const [histogramTwoXAttribute, setHistogramTwoXAttribute] = useState(histogramTwoInitialXAttribute)
   const [histogramTwoYAttribute, setHistogramTwoYAttribute] = useState(histogramTwoInitialYAttribute)
-
   const mousePosition = [0, 0]
-
   const [hoveredValue, setHoveredValue] = useState(null)
   const handleSetHoveredValue = useCallback((d) => {
     d ? setHoveredValue(d) : setHoveredValue(null)
@@ -80,29 +80,17 @@ const App = () => {
   // const handleSetHoveredValue = useCallback((d) => {
   //   d ? setHoveredValue([d]) : setHoveredValue(null)
   // }, [])
-
   if (!boundaries || !covidData) {
     return <pre>Loading...</pre>
   }
-
   const keyedCovidData = new Map()
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
-    //
-    // src='https://api.mapbox.com//styles/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?title=true&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNrbXpjMXV2dzAxOW4ycHBiZDB1NzE0amsifQ.p28rFaL7eqlLVZ0hdS-t_w#10/40.716/-73.971'
-
-// https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=copy&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ
-
     // <div>
     //   <div className="divZero">Maps</div>
     //   <Maps />
     // </div>
-
-
-// Extent
-// -74.2555880000000030,40.4961150000000032 : -73.7000110000000035,40.9155319999999989
-
   return (
     <>
       <div className="svg-iframe-container">
@@ -110,33 +98,33 @@ const App = () => {
           <iframe
             src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ#9.32/40.687/-73.963`}
 
-            width={`${svgWidth/2}`} height={svgHeight/2} title='NYC Heat Islands, Foliage, and Covid'>
+            width={`${mapsWidth/2}`} height={mapsHeight/2} title='NYC Heat Islands, Foliage, and Covid'>
           </iframe>
         </div>
       </div>
 
-      <svg className="sideBySide" width={svgWidth/2} height={svgHeight/2} margin={0}>
+      <svg className="sideBySide" width={mapsWidth/2} height={mapsHeight/2} margin={0}>
         <g
         transform={`translate(0, 0)`}>
           <NycMap
             boundaries={boundaries}
             covidData={covidData}
             keyedCovidData={keyedCovidData}
-            width={svgWidth/2}
-            height={(1 - graphHeight) * svgHeight}
+            width={mapsWidth/2}
+            height={mapsHeight/2}
             mousePosition={mousePosition}
             sendHoveredValue={handleSetHoveredValue}
             hoveredValue={hoveredValue}
           />
         </g>
       </svg>
-        <svg width={svgWidth} height={svgHeight/2} margin={20}>
-          <g transform={`translate(${svgWidth/3}, 0)`}>
+        <svg width={svgWidth} height={svgWidth} margin={20}>
+          <g transform={`translate(${graph3XTranslate}, 0)`}>
             <Histogram
             covidData={covidData}
             keyedCovidData={keyedCovidData}
-            width={svgWidth/2}
-            height={graphHeight * svgHeight}
+            width={graphWidth}
+            height={graphHeight}
             hoveredValue={hoveredValue}
             sendHoveredValue={handleSetHoveredValue}
             histogramXAttribute={histogramXAttribute}
@@ -146,12 +134,12 @@ const App = () => {
             xScaleMin={0}
             />
           </g>
-          <g transform={`translate(0, 0)`}>
+          <g transform={`translate(${graph2XTranslate}, 0)`}>
             <Histogram
             covidData={covidData}
             keyedCovidData={keyedCovidData}
-            width={svgWidth/2}
-            height={graphHeight * svgHeight}
+            width={graphWidth}
+            height={graphHeight}
             hoveredValue={hoveredValue}
             sendHoveredValue={handleSetHoveredValue}
             histogramXAttribute={histogramTwoXAttribute}
@@ -159,6 +147,21 @@ const App = () => {
             attributes={attributes}
             yScaleMin={0}
             xScaleMin={86}
+            />
+          </g>
+          <g transform={`translate(${graph1XTranslate}, 0)`}>
+            <ScatterPlot
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={graphWidth}
+            height={graphHeight}
+            hoveredValue={hoveredValue}
+            sendHoveredValue={handleSetHoveredValue}
+            scatterXAttribute={scatterXAttribute}
+            scatterYAttribute={scatterYAttribute}
+            attributes={attributes}
+            yScaleMin={0}
+            xScaleMin={90}
             />
           </g>
         </svg>
@@ -210,21 +213,6 @@ export default App
 // </g>
 
 
-// <g transform={`translate(0, ${svgHeight - graphHeight * svgHeight})`}>
-//   <ScatterPlot
-//   covidData={covidData}
-//   keyedCovidData={keyedCovidData}
-//   width={svgWidth/2}
-//   height={graphHeight * svgHeight}
-//   hoveredValue={hoveredValue}
-//   sendHoveredValue={handleSetHoveredValue}
-//   scatterXAttribute={scatterXAttribute}
-//   scatterYAttribute={scatterYAttribute}
-//   attributes={attributes}
-//   yScaleMin={0}
-//   xScaleMin={90}
-//   />
-// </g>
 
 
 
