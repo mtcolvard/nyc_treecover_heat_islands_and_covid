@@ -43,7 +43,7 @@ const height = window.innerHeight
 const innerWidth = width - (margin.right + margin.left)
 const innerHeight = height - (margin.top + margin.bottom)
 
-const mapsWidth = (innerWidth)/2
+const mapsWidth = innerWidth/2
 const mapsHeight = mapsWidth
 const svgWidth = innerWidth
 const svgHeight = innerHeight
@@ -106,25 +106,22 @@ const App = () => {
 
   return (
     <>
-    <div className="headline" width={innerWidth} height={width/6}>
-    <h1>Climate change and substandard infrastructure exacerbate pandemic suffering amongst New York City's poorest</h1>
-      <h2> </h2>
-      <div className="headline-indent"><h2>
-      </h2>
-      <h2>
-       <span>  </span></h2></div>
-    </div>
-
-      <div className="svg-iframe-container">
-        <div className="sideBySide" transform={`translate(0, 0)`}>
-          <iframe
-            src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ#9.32/40.687/-73.963`}
-            width={`${mapsWidth}`} height={mapsHeight} title='NYC Heat Islands, Foliage, and Covid'>
-          </iframe>
-        </div>
+      <div className="headline" width={innerWidth} height={width/6}>
+        <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
+      </div>
+      <div className="captions">
+        <p>Temperature variations by neighborhood on a hot August day, typical pattern </p>
+        <p>Confirmed infections /total residents tested, cumulative by neighborhood</p>
+      </div>
+      <div className="iframe-svg-container">
+        <iframe
+          width={`${mapsWidth}`}
+          height={mapsHeight}
+          title='NYC Heat Islands, Foliage, and Covid'
+          src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ#9.32/40.687/-73.963`}>
+        </iframe>
         <svg className="sideBySide" width={mapsWidth} height={mapsHeight} margin={0}>
-          <g
-          transform={`translate(0, 0)`}>
+          <g transform={`translate(0, 0)`}>
             <NycMap
               boundaries={boundaries}
               covidData={covidData}
@@ -138,14 +135,18 @@ const App = () => {
           </g>
         </svg>
       </div>
-      <svg width={innerWidth} height={margin.left}>
-        <g transform={`translate(0,0)`}>
-          <text alignment-baseline="hanging">A typical summers day. Temperatures across NYC neighborhoods vary as much as 16 degrees in neighborhoods lacking foliage and greenspace. August 19th, 2019 Data: USGS, Landsat-8 ARD</text>
-        </g>
-        <g transform={`translate(${innerWidth/2},0)`}>
-          <text alignment-baseline="hanging">COVID-positive test rates are especially high in low-income neighborhoods. Data: NYC Dept. of Health and Mental Hygiene</text>
-        </g>
-      </svg>
+      <div className="captions maps-footer">
+        <div className="caption-1" width={innerWidth/2} height={'1em'}>
+          <p>Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
+          <p className="footnote">Data: USGS, Landsat-8 ARD</p>
+        </div>
+        <div className="caption-2" width={innerWidth/2} height={'1em'}>
+          <p>COVID-positive test rates are especially high in low-income neighborhoods. </p>
+          <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
+        </div>
+      </div>
+
+
       <text>“Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</text>
         <svg className={"three-graphs"} width={svgWidth} height={svgWidth} margin={20}>
           <g  transform={`translate(${graph3XTranslate}, 0)`}>
@@ -198,6 +199,17 @@ const App = () => {
   )
 }
 export default App
+
+// <svg width={innerWidth/2} height={height/9}>
+//   <g width={mapsWidth} height={mapsHeight} transform={`translate(${innerWidth/2},0)`}>
+//     <text >COVID-positive test rates are especially high in low-income neighborhoods. Data: NYC Dept. of Health and Mental Hygiene</text>
+//   </g>
+//
+//   <g transform={`translate(0,0)`}>
+//     <text text-anchor="right" alignment-baseline="hanging">A typical summers day. Temperatures across NYC neighborhoods vary as much as 16 degrees in neighborhoods lacking foliage and greenspace. August 19th, 2019 Data: USGS, Landsat-8 ARD</text>
+//   </g>
+// </svg>
+
 
 
 // <div className="menus-container">

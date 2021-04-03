@@ -20,7 +20,7 @@ h2 {
 }
 
 .headline {
-  margin:20px;
+  margin:2em;
 }
 
 .headline-indent {
@@ -66,16 +66,28 @@ h2 {
   max-width: 300px;
 }
 
-.svg-iframe-container {
+.iframe-svg-container {
   display: inline-flex;
   margin-left: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
 }
 
-.svg-graph {
-
+.captions {
+  /* display: flex;
+  justify-content: space-around; */
+  columns: 2;
+  padding: 0 20px 0.25em 20px;
+  margin-left: 0.25em;
 }
+
+.footnote {
+  /* justify-content: flex-end; */
+  padding-top: 0.25em;
+  margin: 0 20px 0px 0px;
+}
+.maps-footer {
+  margin-bottom: 2em;
+}
+
 .three-graphs {
   display: inline-flex;
   flex-wrap: wrap;
