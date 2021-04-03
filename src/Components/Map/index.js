@@ -5,6 +5,7 @@ import { MapFill } from './MapFill'
 
 export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredValue, hoveredValue, keyedCovidData, covidData }) => {
 
+  // const colorValue = d => d.PERCENT_POSITIVE !== null ? d.PERCENT_POSITIVE : 0
   const colorValue = d => d.PERCENT_POSITIVE
   const colorScale =
     scaleThreshold()

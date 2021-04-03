@@ -32,11 +32,8 @@ export const MapFill = ({
           key={cityZip}
           onMouseEnter={() => { onHover(cityZip) }}
           onMouseOut={() => { onHover(null) }}
-          // fill={d ? colorScale(colorValue(d)) : missingDataColor}
-          fill={cityZip === hoveredValue ? 'black' : (d  ? colorScale(colorValue(d)) : missingDataColor)}
-          // fill={hoveredValue.includes(cityZip) ? 'black' : (d  ? colorScale(colorValue(d)) : missingDataColor)}
+          fill={isNaN(colorValue(d)) ? missingDataColor : (cityZip === hoveredValue ? 'black' : colorScale(colorValue(d)))}
           d={path(feature)}
-
         />
       })}
       />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { csv } from 'd3'
 
-  const csvUrl = 'https://gist.githubusercontent.com/mtcolvard/d64937111f2ced60077955d2d01152ba/raw/71ccd07f4b0209cf52876db40bda432beb420e05/NYC_COVID_Trees_Temp_by_MODZCTA.csv'
+  const csvUrl = 'https://gist.githubusercontent.com/mtcolvard/d64937111f2ced60077955d2d01152ba/raw/89e6b27f99e9daedc750d7e1c3350bbe5785ffcb/NYC_COVID_Trees_Temp_by_MODZCTA.csv'
   const row = d => {
     d.MODIFIED_ZCTA = +d['MODIFIED_ZCTA']
     d.lat = +d['lat']

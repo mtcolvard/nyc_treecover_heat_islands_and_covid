@@ -62,7 +62,7 @@ return(
       >
         {yAxisLabel}
       </text>
-      <AxisLeft  
+      <AxisLeft
         yScale={yScale}
         innerWidth={innerWidth}
         tickFormat={yAxisTickFormat}
@@ -76,7 +76,7 @@ return(
       >
         {xAxisLabel}
       </text>
-      <ScatterMarks
+      {hoveredValue!==false && <ScatterMarks
         data={covidData}
         xValue={xValue}
         yValue={yValue}
@@ -86,8 +86,8 @@ return(
         fillColor={'#137B80'}
         opacity={0.3}
         // onHover={sendHoveredValue}
-      />
-      {hoveredValue && hoveredValue!==false && <ScatterMarks
+      />}
+      {hoveredValue && <ScatterMarks
         data={[keyedCovidData.get(hoveredValue)]}
         xValue={xValue}
         yValue={yValue}

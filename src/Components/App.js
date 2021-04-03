@@ -87,6 +87,7 @@ const App = () => {
   if (!boundaries || !covidData) {
     return <pre>Loading...</pre>
   }
+
   const keyedCovidData = new Map()
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
@@ -110,8 +111,8 @@ const App = () => {
         <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
       </div>
       <div className="captions">
-        <p>Temperature variations by neighborhood on a hot August day, typical pattern </p>
-        <p>Confirmed infections /total residents tested, cumulative by neighborhood</p>
+        <p>Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
+        <p>COVID-positive test rates are especially high in low-income neighborhoods</p>
       </div>
       <div className="iframe-svg-container">
         <iframe
@@ -137,11 +138,11 @@ const App = () => {
       </div>
       <div className="captions maps-footer">
         <div className="caption-1" width={innerWidth/2} height={'1em'}>
-          <p>Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
+          <p>Temperature variations by neighborhood on a hot August day, typical pattern</p>
           <p className="footnote">Data: USGS, Landsat-8 ARD</p>
         </div>
         <div className="caption-2" width={innerWidth/2} height={'1em'}>
-          <p>COVID-positive test rates are especially high in low-income neighborhoods. </p>
+          <p>Antibody Prevalence: Confirmed infections per residents tested, cumulative by neighborhood</p>
           <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
         </div>
       </div>
