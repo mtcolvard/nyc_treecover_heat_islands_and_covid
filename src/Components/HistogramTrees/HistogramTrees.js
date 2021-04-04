@@ -14,9 +14,9 @@ export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHov
   const innerWidth = width - margin.left - margin.right
   const xAxisLabelOffset = 54
 
-  const siFormat = format('.2s');
-  const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
-  const yAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
+  // const siFormat = format('.2s');
+  // const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
+  // const yAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
   const xAxisLabel = attributes[histogramXAttribute].label
 
   const xValue = d => d[histogramXAttribute]
@@ -35,16 +35,13 @@ export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHov
     (covidData)
     .map(array => ({
       y: mean(array, yValue),
-      // y: sum(array, yValue),
       x0: array.x0,
       x1: array.x1
     }))
 
   const yScale = scaleLinear()
-    // .domain(extent(binnedData, d => d.y))
     // .domain([yScaleMin, max(binnedData, d => d.y)])
     .domain([yScaleMin, 22])
-    // .domain([yScaleMin, max(yScaleMax)])
     .range([innerHeight, 0])
     .nice()
 
