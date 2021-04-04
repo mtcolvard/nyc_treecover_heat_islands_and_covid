@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react'
-import {select, axisBottom} from 'd3'
+import {select, axisBottom, format} from 'd3'
 
 export const XAxis = ({xScale, innerHeight, tickSize, tickPadding}) => {
   const ref = useRef()
@@ -9,7 +9,9 @@ export const XAxis = ({xScale, innerHeight, tickSize, tickPadding}) => {
      const xAxis = axisBottom(xScale)
        .tickSize(-innerHeight)
        .tickPadding(18)
-       // .tickFormat((tickValue) => tickValue)
+       .tickFormat(format('~s'))
+       .tickValues([88,92,96,100])
+       .offset(.5)
      xAxisG.call(xAxis)
    }, []);
 

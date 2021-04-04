@@ -10,7 +10,6 @@ export const XAxis = ({xScale, innerHeight, tickSize, tickPadding}) => {
        // .tickSize(-innerHeight)
        .tickPadding(18)
        // .tickFormat((tickValue) => tickValue)
-       .tickArguments(2)
        .tickFormat(format('~s'))
        .tickValues([1000,2000,3000,4000,5000,6000])
      xAxisG.call(xAxis)
