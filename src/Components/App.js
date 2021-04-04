@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
+// import { useIframe } from 'use-iframe';
+
 import ReactDropdown from 'react-dropdown'
 import './App.css'
 import { useBoundaries } from './useBoundaries'
@@ -9,7 +11,10 @@ import { NycMap } from './Map/index'
 import { ScatterPlot } from './Scatter/index'
 import { Dropdown } from './Dropdown'
 import { BinnedScatter } from './BinnedScatter/index'
+
 import { Maps } from './Maps'
+import { Child } from './Child'
+import { Maps2 } from './Maps2'
 
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
@@ -63,18 +68,21 @@ const App = () => {
   const boundaries = useBoundaries()
   const covidData = useCovidData()
   const attributeOptions = Object.keys(attributes)
+  const mapInitialYAttribute = 'PERCENT_POSITIVE'
   const scatterInitialXAttribute = 'ALL_HOUSEHOLDS'
   const scatterInitialYAttribute = 'PERCENT_POSITIVE'
   const histogramInitialXAttribute = 'treesPerMilesq'
   const histogramInitialYAttribute = 'PERCENT_POSITIVE'
   const histogramTwoInitialXAttribute = 'majority'
   const histogramTwoInitialYAttribute = 'PERCENT_POSITIVE'
+  const [mapYAttribute, setMapYAttribute] = useState(mapInitialYAttribute)
   const [scatterXAttribute, setScatterXAttribute] = useState(scatterInitialXAttribute)
   const [scatterYAttribute, setScatterYAttribute] = useState(scatterInitialYAttribute)
   const [histogramXAttribute, setHistogramXAttribute] = useState(histogramInitialXAttribute)
   const [histogramYAttribute, setHistogramYAttribute] = useState(histogramInitialYAttribute)
   const [histogramTwoXAttribute, setHistogramTwoXAttribute] = useState(histogramTwoInitialXAttribute)
   const [histogramTwoYAttribute, setHistogramTwoYAttribute] = useState(histogramTwoInitialYAttribute)
+
   const mousePosition = [0, 0]
   const [hoveredValue, setHoveredValue] = useState(null)
   const handleSetHoveredValue = useCallback((d) => {
@@ -84,6 +92,30 @@ const App = () => {
   // const handleSetHoveredValue = useCallback((d) => {
   //   d ? setHoveredValue([d]) : setHoveredValue(null)
   // }, [])
+
+  // const ref = useRef(null)
+  //
+  //   const handler = useCallback(message => {
+  //     switch (message.type) {
+  //       case "child-says":
+  //         console.log(`The child said: ${message.text}`)
+  //     }
+  //   }, [])
+  //
+  //   const [dispatch] = useIframe(handler, { ref })
+  //
+  //   const onClick = () => dispatch({ type: "parent-says", text: "Hello, Child!" })
+
+  // <div>
+  //   <p>I am the parent component</p>
+  //   <iframe
+  //     ref={ref}
+  //     id="NYC"
+  //     title='NYC Heat Islands, Foliage, and Covid'
+  //     src="/iframe-component"/>
+  // </div>
+
+
   if (!boundaries || !covidData) {
     return <pre>Loading...</pre>
   }
@@ -92,114 +124,83 @@ const App = () => {
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
+
+console.log('mapsWidth', mapsWidth, mapsHeight)
+
+    // <div className="divZero">Maps</div>
+
+
+
     // <div>
-    //   <div className="divZero">Maps</div>
-    //   <Maps />
+    //   <Maps2
+    //     mapsWidth={mapsWidth}
+    //     mapsHeight={mapsHeight}/>
     // </div>
 
-    // <svg width={innerWidth} height={innerHeight}>
-    //    <g transform={`translate(${margin.left},${margin.top})`}>
-    //     <text transform={`translate(${innerWidth / 2},0)`} text-anchor="middle">
-    //     “Of all the climate change exposures we study, heat is the No. 1 killer.” - Rupa Basu, chief of air and climate epidemiology for the California Office of Environmental Health Hazard Assessment
-    //     </text>
-    //    </g>
-    // </svg>
 
   return (
-    <>
-      <div className="headline" width={innerWidth} height={width/6}>
-        <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
+  <>
+    <div className="iframe-svg-container">
+      <div>
+        <Maps />
       </div>
-      <div className="captions">
-        <p>Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
-        <p>COVID-positive test rates are especially high in low-income neighborhoods</p>
-      </div>
-      <div className="iframe-svg-container">
-        <iframe
-          width={`${mapsWidth}`}
-          height={mapsHeight}
-          title='NYC Heat Islands, Foliage, and Covid'
-          src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ#9.32/40.687/-73.963`}>
-        </iframe>
-        <svg className="sideBySide" width={mapsWidth} height={mapsHeight} margin={0}>
-          <g transform={`translate(0, 0)`}>
-            <NycMap
-              boundaries={boundaries}
-              covidData={covidData}
-              keyedCovidData={keyedCovidData}
-              width={mapsWidth}
-              height={mapsHeight}
-              mousePosition={mousePosition}
-              sendHoveredValue={handleSetHoveredValue}
-              hoveredValue={hoveredValue}
-            />
-          </g>
-        </svg>
-      </div>
-      <div className="captions maps-footer">
-        <div className="caption-1" width={innerWidth/2} height={'1em'}>
-          <p>Temperature variations by neighborhood on a hot August day, typical pattern</p>
-          <p className="footnote">Data: USGS, Landsat-8 ARD</p>
-        </div>
-        <div className="caption-2" width={innerWidth/2} height={'1em'}>
-          <p>Antibody Prevalence: Confirmed infections per residents tested, cumulative by neighborhood</p>
-          <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
-        </div>
-      </div>
-
-
-      <text>“Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</text>
-        <svg className={"three-graphs"} width={svgWidth} height={svgWidth} margin={20}>
-          <g  transform={`translate(${graph3XTranslate}, 0)`}>
-            <Histogram
+    <div>
+      <svg className="sideBySide" width={mapsWidth} height={mapsHeight} margin={0}>
+        <g transform={`translate(0, 0)`}>
+          <NycMap
+            boundaries={boundaries}
             covidData={covidData}
             keyedCovidData={keyedCovidData}
-            width={graphWidth}
-            height={graphHeight}
-            hoveredValue={hoveredValue}
+            width={mapsWidth}
+            height={mapsHeight}
+            mousePosition={mousePosition}
             sendHoveredValue={handleSetHoveredValue}
-            histogramXAttribute={histogramXAttribute}
-            histogramYAttribute={histogramYAttribute}
-            attributes={attributes}
-            yScaleMin={0}
-            xScaleMin={0}
-            />
-          </g>
-          <g  transform={`translate(${graph2XTranslate}, 0)`}>
-            <Histogram
-            covidData={covidData}
-            keyedCovidData={keyedCovidData}
-            width={graphWidth}
-            height={graphHeight}
             hoveredValue={hoveredValue}
-            sendHoveredValue={handleSetHoveredValue}
-            histogramXAttribute={histogramTwoXAttribute}
-            histogramYAttribute={histogramTwoYAttribute}
-            attributes={attributes}
-            yScaleMin={0}
-            xScaleMin={86}
-            />
-          </g>
-          <g  transform={`translate(${graph1XTranslate}, 0)`}>
-            <ScatterPlot
-            covidData={covidData}
-            keyedCovidData={keyedCovidData}
-            width={graphWidth}
-            height={graphHeight}
-            hoveredValue={hoveredValue}
-            sendHoveredValue={handleSetHoveredValue}
-            scatterXAttribute={scatterXAttribute}
-            scatterYAttribute={scatterYAttribute}
-            attributes={attributes}
-            yScaleMin={0}
-            xScaleMin={90}
-            />
-          </g>
-        </svg>
-    </>
+            mapYAttribute={mapYAttribute}
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+  </>
   )
 }
 export default App
+
+// <div>
+//   <div className="divZero">Maps</div>
+//   <Maps />
+// </div>
+
+// <svg width={innerWidth} height={innerHeight}>
+//    <g transform={`translate(${margin.left},${margin.top})`}>
+//     <text transform={`translate(${innerWidth / 2},0)`} text-anchor="middle">
+//     “Of all the climate change exposures we study, heat is the No. 1 killer.” - Rupa Basu, chief of air and climate epidemiology for the California Office of Environmental Health Hazard Assessment
+//     </text>
+//    </g>
+// </svg>
+
+// <foreignObject className='btn' width='auto' height="20">
+//   <button className='btn'>Antibody Prevalence</button>
+// </foreignObject>
+
+// <g transform={`translate(0, ${mapsHeight-mapsHeight/16})`}>
+//   <rect width={mapsHeight/8} height={mapsHeight/16} fill='white' />
+// </g>
+
+// <iframe
+//   width={`${mapsWidth}`}
+//   height={mapsHeight}
+//   title='NYC Heat Islands, Foliage, and Covid'
+//   src={`https://api.mapbox.com/styles/v1/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8.html?fresh=true&title=false&zoomwheel=false&access_token=pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNqemI4emZydjA2dHIzYm80ZG96ZmQyN2wifQ.kVp6eB7AkWjslUOtsJyLDQ#9.32/40.687/-73.963`}>
+// </iframe>
+// <iframe
+//   ref={ref}
+//   width={`${mapsWidth}`}
+//   height={mapsHeight}
+//   title='NYC Heat Islands, Foliage, and Covid'
+//   src="/iframe-content"/>
+
 
 // <svg width={innerWidth/2} height={height/9}>
 //   <g width={mapsWidth} height={mapsHeight} transform={`translate(${innerWidth/2},0)`}>

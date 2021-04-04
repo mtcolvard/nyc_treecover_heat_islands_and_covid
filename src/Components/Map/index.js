@@ -3,10 +3,9 @@ import { schemeBlues, scaleThreshold } from 'd3'
 import { MapFill } from './MapFill'
 // import { useMousePosition } from './useMousePosition'
 
-export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredValue, hoveredValue, keyedCovidData, covidData }) => {
+export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredValue, hoveredValue, keyedCovidData, covidData, mapYAttribute }) => {
 
-  // const colorValue = d => d.PERCENT_POSITIVE !== null ? d.PERCENT_POSITIVE : 0
-  const colorValue = d => d.PERCENT_POSITIVE
+  const colorValue = d => d[mapYAttribute]
   const colorScale =
     scaleThreshold()
     .domain([4,6,8,10,12,14,16,18,20])
@@ -37,16 +36,3 @@ export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredVa
     </>
   )
 }
-
-// covidData={[keyedCovidData.get(hoveredValue)]}
-
-
-// <g transform={`translate(${mousePosition.x}, ${mousePosition.y})`}>
-//   <text>Foo</text>
-// </g>
-
-// <circle
-//   cx={mousePosition.x}
-//   cy={mousePosition.y}
-//   r={10}
-// />

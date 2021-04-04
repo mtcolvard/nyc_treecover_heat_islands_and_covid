@@ -71,6 +71,10 @@ h2 {
   margin-left: 20px;
 }
 
+.map-div-container {
+  /* display: block; */
+}
+
 .captions {
   /* display: flex;
   justify-content: space-around; */
@@ -78,6 +82,14 @@ h2 {
   padding: 0 20px 0.25em 20px;
   margin-left: 0.25em;
 }
+
+/* .butt1 {
+  display: inline-block;
+  position: relative;
+  /* transform:translate(0, -100); */
+  /* transform={`translate(0, -100)`} */
+  /* top: -100px;
+} */
 
 .footnote {
   /* justify-content: flex-end; */
