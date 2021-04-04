@@ -5,10 +5,9 @@ import { HistogramMarks } from  './Marks'
 // import { AxisBottom } from './AxisBottom'
 import { XAxis } from './XAxis'
 import { YAxis } from './YAxis'
-import { Dropdown } from './Dropdown'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
-export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor }) => {
+export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor }) => {
 
   const margin = { top: 20, right: 20, bottom: 65, left: 60 }
   const innerHeight = height - margin.top - margin.bottom
@@ -43,7 +42,8 @@ export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredV
 
   const yScale = scaleLinear()
     // .domain(extent(binnedData, d => d.y))
-    .domain([yScaleMin, max(binnedData, d => d.y)])
+    // .domain([yScaleMin, max(binnedData, d => d.y)])
+    .domain([yScaleMin, 22])
     // .domain([yScaleMin, max(yScaleMax)])
     .range([innerHeight, 0])
     .nice()

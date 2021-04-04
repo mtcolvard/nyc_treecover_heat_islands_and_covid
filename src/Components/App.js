@@ -5,10 +5,11 @@ import './App.css'
 import { useBoundaries } from './Data/useBoundaries'
 import { useCovidData } from './Data/useCovidData'
 import { useMousePosition } from './aUtilities/useMousePosition'
-import { Dropdown } from './aReference/Dropdown'
+// import { Dropdown } from './aReference/Dropdown'
 
 import { BinnedScatter } from './BinnedScatter/index'
 import { Histogram } from './Histogram/index'
+import { HistogramTrees } from './HistogramTrees/HistogramTrees'
 import { ScatterPlot } from './Scatter/index'
 
 import { SvgMap } from './Maps/SvgMap'
@@ -173,7 +174,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
 
       <svg className={"three-graphs"} width={svgWidth} height={svgWidth}>
         <g  transform={`translate(${graph3XTranslate}, 0)`}>
-          <Histogram
+          <HistogramTrees
           covidData={covidData}
           keyedCovidData={keyedCovidData}
           width={graphWidth}
@@ -184,6 +185,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           histogramYAttribute={histogramYAttribute}
           attributes={attributes}
           yScaleMin={0}
+          yScaleMax={22}
           xScaleMin={0}
           rectFillColor={rectFillColor}
           />
@@ -201,6 +203,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           attributes={attributes}
           yScaleMin={0}
           xScaleMin={86}
+          xScaleMax={100}
           rectFillColor={rectFillColor}
           />
         </g>
@@ -216,7 +219,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           scatterYAttribute={scatterYAttribute}
           attributes={attributes}
           yScaleMin={0}
-          xScaleMin={90}
+          xScaleMin={0}
           rectFillColor={rectFillColor}
           />
       </g>

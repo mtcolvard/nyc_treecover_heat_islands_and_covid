@@ -22,9 +22,13 @@ export const XAxis = ({xScale, innerHeight}) => {
      const xAxis = axisBottom(xScale)
        .tickSize(-innerHeight)
        .tickPadding(18)
-       // .tickArguments([6, '~s'])
-       .tickValues([40000,80000,120000,160000,200000,240000])
-       .tickFormat(format('~s'))
+       .tickArguments([5, '~s'])
+       // .range(0,300000,30000)
+       // .tickValues([40000,80000,120000,160000,200000,240000])
+       // .tickValues([30000,60000,90000,120000,150000,180000,210000,240000])
+       // .tickValues([60000,120000,180000,240000,300000])
+       // .tickFormat(format('~s'))
+       // .nice()
      xAxisG.call(xAxis)
    }, []);
 
