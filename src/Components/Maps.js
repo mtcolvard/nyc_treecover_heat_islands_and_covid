@@ -37,9 +37,20 @@ export const Maps = () => {
     'id': 'temperatureRasterLayer',
     'type': 'raster',
     'source': 'temperatureRaster',
-    'layout': {'visibility': 'none'
-    }
-    // // ,'source-layer': 'whiteback',
+    'layout': {'visibility': 'none'}
+    })
+
+
+    map.addSource('treeRaster', {
+      'type': 'raster',
+      'url': 'mapbox://mtcolvard.3hivmcle',
+    })
+
+    map.addLayer({
+    'id': 'treeRasterLayer',
+    'type': 'raster',
+    'source': 'treeRaster',
+    'layout': {'visibility': 'none'}
     })
 
     map.addSource('modzctaVector', {
@@ -51,22 +62,16 @@ export const Maps = () => {
     'id': 'modzctaVectorLayer',
     'type': 'line',
     'source': 'modzctaVector',
-    'layout': {'visibility': 'none'
-    },
+    'layout': {'visibility': 'none'},
     'source-layer': 'modzcta-1m1hy2',
     })
 
-
     map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'visible')
     map.setLayoutProperty('modzctaVectorLayer', 'visibility', 'visible')
-    // map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'none')
-
-    map.setPaintProperty('temperatureRasterLayer', 'raster-opacity', 1)
-
+    map.setLayoutProperty('treeRasterLayer', 'visibility', 'visible')
     map.setPaintProperty('modzctaVectorLayer', 'line-color', 'hsla(180, 3%, 63%, 1)')
 
-
-
+    // map.setPaintProperty('temperatureRasterLayer', 'raster-opacity', 1)
       setMap(map)
     })
     return () => map.remove()

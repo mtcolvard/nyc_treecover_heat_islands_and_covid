@@ -127,23 +127,18 @@ const App = () => {
 
 console.log('mapsWidth', mapsWidth, mapsHeight)
 
-    // <div className="divZero">Maps</div>
-
-
-
     // <div>
-    //   <Maps2
-    //     mapsWidth={mapsWidth}
-    //     mapsHeight={mapsHeight}/>
+    //   <Maps />
     // </div>
-
 
   return (
   <>
     <div className="iframe-svg-container">
-      <div>
-        <Maps />
-      </div>
+    <div>
+      <Maps2
+        mapsWidth={mapsWidth}
+        mapsHeight={mapsHeight}/>
+    </div>
     <div>
       <svg className="sideBySide" width={mapsWidth} height={mapsHeight} margin={0}>
         <g transform={`translate(0, 0)`}>

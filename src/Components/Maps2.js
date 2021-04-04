@@ -38,36 +38,47 @@ export const Maps2 = ({mapsWidth, mapsHeight}) =>  {
             'url': 'mapbox://mtcolvard.abtfqj2f',
           })
 
-          map.addLayer({
-          'id': 'temperatureRasterLayer',
+        map.addLayer({
+        'id': 'temperatureRasterLayer',
+        'type': 'raster',
+        'source': 'temperatureRaster',
+        'layout': {'visibility': 'none'}
+        })
+
+
+        map.addSource('treeRaster', {
           'type': 'raster',
-          'source': 'temperatureRaster',
-          'layout': {'visibility': 'visible'
-          },
-          'source-layer': 'whiteback',
-          })
+          'url': 'mapbox://mtcolvard.3hivmcle',
+        })
 
-          map.addSource('modzctaVector', {
-            'type': 'vector',
-            'url': 'mapbox://mtcolvard.c01qzd4e',
-          })
+        map.addLayer({
+        'id': 'treeRasterLayer',
+        'type': 'raster',
+        'source': 'treeRaster',
+        'layout': {'visibility': 'none'}
+        })
 
-          map.addLayer({
-          'id': 'modzctaVectorLayer',
-          'type': 'fill',
-          'source': 'modzctaVector',
-          'layout': {'visibility': 'visible'
-          },
-          'source-layer': 'modzcta-1m1hy2',
-          })
+        map.addSource('modzctaVector', {
+          'type': 'vector',
+          'url': 'mapbox://mtcolvard.c01qzd4e',
+        })
 
-          map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'none')
-          map.setPaintProperty('temperatureRasterLayer', 'raster-opacity', 0)
+        map.addLayer({
+        'id': 'modzctaVectorLayer',
+        'type': 'line',
+        'source': 'modzctaVector',
+        'layout': {'visibility': 'none'},
+        'source-layer': 'modzcta-1m1hy2',
+        })
 
+        map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'visible')
+        map.setLayoutProperty('modzctaVectorLayer', 'visibility', 'visible')
+        map.setLayoutProperty('treeRasterLayer', 'visibility', 'visible')
+        map.setPaintProperty('modzctaVectorLayer', 'line-color', 'hsla(180, 3%, 63%, 1)')
 
-          })
-        </script>
-        </body>
-        </html>`}>
+        })    
+      </script>
+      </body>
+      </html>`}>
     </iframe>
 )}
