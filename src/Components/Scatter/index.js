@@ -5,7 +5,7 @@ import { AxisLeft } from './AxisLeft'
 import { ScatterMarks }  from  './Marks'
 import { max, format, scaleLinear, extent } from 'd3'
 
-export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredValue, sendHoveredValue, scatterXAttribute, scatterYAttribute, attributes, xScaleMin, yScaleMin }) => {
+export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredValue, sendHoveredValue, scatterXAttribute, scatterYAttribute, attributes, xScaleMin, yScaleMin, rectFillColor }) => {
 
   const circleRadius = 8
   const fadeOpacity = 0.3
@@ -46,7 +46,7 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
 
 return(
   <>
-    <rect width={width} height={height} fill='white' />
+    <rect width={width} height={height} fill={rectFillColor} />
     <g transform={`translate(${margin.left},${margin.top})`}>
       <AxisBottom
         xScale={xScale}

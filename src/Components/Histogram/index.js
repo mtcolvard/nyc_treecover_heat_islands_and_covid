@@ -7,7 +7,7 @@ import { AxisLeft } from './AxisLeft'
 import { Dropdown } from './Dropdown'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
-export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, yScaleMin }) => {
+export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, yScaleMin, rectFillColor }) => {
 
   const margin = { top: 20, right: 20, bottom: 65, left: 60 }
   const innerHeight = height - margin.top - margin.bottom
@@ -50,7 +50,7 @@ export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredV
 
 return(
   <>
-    <rect width={width} height={height} fill='white' />
+    <rect width={width} height={height} fill={rectFillColor} />
       <g transform={`translate(${margin.left},${margin.top})`}>
           <AxisBottom
             xScale={xScale}
