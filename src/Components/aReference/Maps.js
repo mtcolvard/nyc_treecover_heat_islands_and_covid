@@ -88,11 +88,8 @@ export const Maps = () => {
       // map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'none')
       // map.setLayoutProperty('modzctaVectorLayer', 'visibility', 'none')
       // map.setPaintProperty('modzctaVectorLayer', 'vector-opacity', 0)
-
-
     }
   }
-
   const changeState = i => {
     setActive(!active)
   }

@@ -5,7 +5,7 @@ import {
 
 const missingDataColor = 'rgba(0, 140, 255, 0)'
 
-export const MapFill = ({
+export const SvgMapFill = ({
   boundaries: { neighborhood },
   keyedCovidData,
   width,

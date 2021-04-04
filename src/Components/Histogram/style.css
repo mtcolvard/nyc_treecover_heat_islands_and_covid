@@ -7,3 +7,11 @@
   font-size: 1em;
   fill: #635F5D;
 }
+
+.domain {
+  display: none;
+}
+
+/* text {
+  font-size: 2em;
+} */

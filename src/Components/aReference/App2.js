@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 // import { useIframe } from 'use-iframe';
+
 import ReactDropdown from 'react-dropdown'
 import './App.css'
-import { useBoundaries } from './Data/useBoundaries'
-import { useCovidData } from './Data/useCovidData'
-import { useMousePosition } from './aUtilities/useMousePosition'
-import { Dropdown } from './aReference/Dropdown'
-
-import { BinnedScatter } from './BinnedScatter/index'
+import { useBoundaries } from './useBoundaries'
+import { useCovidData } from './useCovidData'
+import { useMousePosition } from './useMousePosition'
 import { Histogram } from './Histogram/index'
+import { NycMap } from './Map/index'
 import { ScatterPlot } from './Scatter/index'
-
-import { SvgMap } from './Maps/SvgMap'
-import { MapboxMap } from './Maps/MapboxMap'
-// import { MapLegend } from './Maps/MapLegend'
-
+import { Dropdown } from './Dropdown'
+import { BinnedScatter } from './BinnedScatter/index'
+import { Maps } from './Maps'
+import { Child } from './Child'
 
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
@@ -60,8 +58,6 @@ const graphOffset = innerWidth/6
 const graph3XTranslate = centerWidth + graphOffset
 const graph2XTranslate = centerWidth - graphOffset
 const graph1XTranslate = 0
-// const rectFillColor = 'hsla(185, 3%, 94%, 1)'
-const rectFillColor = 'hsla(185, 3%, 83%, 0.5)'
 
 // const dropdownWidth = 40
 // const dropdownHeight = 160
@@ -95,6 +91,29 @@ const App = () => {
   //   d ? setHoveredValue([d]) : setHoveredValue(null)
   // }, [])
 
+  // const ref = useRef(null)
+  //
+  //   const handler = useCallback(message => {
+  //     switch (message.type) {
+  //       case "child-says":
+  //         console.log(`The child said: ${message.text}`)
+  //     }
+  //   }, [])
+  //
+  //   const [dispatch] = useIframe(handler, { ref })
+  //
+  //   const onClick = () => dispatch({ type: "parent-says", text: "Hello, Child!" })
+
+  // <div>
+  //   <p>I am the parent component</p>
+  //   <iframe
+  //     ref={ref}
+  //     id="NYC"
+  //     title='NYC Heat Islands, Foliage, and Covid'
+  //     src="/iframe-component"/>
+  // </div>
+
+
   if (!boundaries || !covidData) {
     return <pre>Loading...</pre>
   }
@@ -104,16 +123,9 @@ const App = () => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
 
-console.log('mapsWidth', mapsWidth, mapsHeight)
-
-// <p>Antibody Prevalence: Confirmed infections per total tests conducted, cumulative by neighborhood</p>
-// <p>Antibody Prevalence: Percent of people who have tested positive since March 2020, cumulative by neighborhood</p>
-// <p>Rate of infection per total tests conducted , cumulative by neighborhood</p>
-
- const yAxisLabelOffset = 50
   return (
-  <>
-    <div>
+    <>
+
       <div className="headline" width={innerWidth} height={width/6}>
         <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
       </div>
@@ -121,17 +133,15 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
         <p>Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
         <p>COVID-positive test rates are especially high in low-income neighborhoods</p>
       </div>
-    </div>
-    <div className="iframe-svg-container">
-      <div>
-        <MapboxMap
-          mapsWidth={mapsWidth}
-          mapsHeight={mapsHeight}/>
-      </div>
-      <div>
-        <svg className="svg-map" width={mapsWidth} height={mapsHeight} margin={0, 20}>
-          <g transform={`translate(0, 0)`} >
-            <SvgMap
+      <div className="iframe-svg-container">
+        <div>
+          <div className="divZero">Maps</div>
+          <Maps />
+        </div>
+
+        <svg className="sideBySide" width={mapsWidth} height={mapsHeight} margin={0}>
+          <g transform={`translate(0, 0)`}>
+            <NycMap
               boundaries={boundaries}
               covidData={covidData}
               keyedCovidData={keyedCovidData}
@@ -145,156 +155,70 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           </g>
         </svg>
       </div>
-    </div>
-    <div className="captions maps-footer">
-      <div className="caption-1" width={innerWidth/2} height={'1em'}>
-        <p>Temperature variations by neighborhood on a hot August day, typical pattern</p>
-        <p className="footnote">Data: USGS, Landsat-8 ARD</p>
+      <div className="captions maps-footer">
+        <div className="caption-1" width={innerWidth/2} height={'1em'}>
+          <p>Temperature variations by neighborhood on a hot August day, typical pattern</p>
+          <p className="footnote">Data: USGS, Landsat-8 ARD</p>
+        </div>
+        <div className="caption-2" width={innerWidth/2} height={'1em'}>
+          <p>Antibody Prevalence: Confirmed infections per residents tested, cumulative by neighborhood</p>
+          <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
+        </div>
       </div>
-      <div className="caption-2" width={innerWidth/2} height={'1em'}>
-        <p>Antibody Prevalence: Confirmed infections per total residents tested, cumulative by neighborhood</p>
 
 
-        <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
-      </div>
-    </div>
-    <div>
       <p>“Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</p>
-    </div>
-    <div className="three-graphs-div">
-    <p
-      className="axis-label"
-      textAnchor="middle"
-      transform={`translate(${yAxisLabelOffset},${innerHeight /
-        2})`}
-    >
-      {'Confirmed infections per total tests conducted'}
-      </p>
-
-      <svg className={"three-graphs"} width={svgWidth} height={svgWidth}>
-        <g  transform={`translate(${graph3XTranslate}, 0)`}>
-          <Histogram
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={graphWidth}
-          height={graphHeight}
-          hoveredValue={hoveredValue}
-          sendHoveredValue={handleSetHoveredValue}
-          histogramXAttribute={histogramXAttribute}
-          histogramYAttribute={histogramYAttribute}
-          attributes={attributes}
-          yScaleMin={0}
-          xScaleMin={0}
-          rectFillColor={rectFillColor}
-          />
-        </g>
-        <g  transform={`translate(${graph2XTranslate}, 0)`}>
-          <Histogram
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={graphWidth}
-          height={graphHeight}
-          hoveredValue={hoveredValue}
-          sendHoveredValue={handleSetHoveredValue}
-          histogramXAttribute={histogramTwoXAttribute}
-          histogramYAttribute={histogramTwoYAttribute}
-          attributes={attributes}
-          yScaleMin={0}
-          xScaleMin={86}
-          rectFillColor={rectFillColor}
-          />
-        </g>
-        <g  transform={`translate(${graph1XTranslate}, 0)`}>
-          <ScatterPlot
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={graphWidth}
-          height={graphHeight}
-          hoveredValue={hoveredValue}
-          sendHoveredValue={handleSetHoveredValue}
-          scatterXAttribute={scatterXAttribute}
-          scatterYAttribute={scatterYAttribute}
-          attributes={attributes}
-          yScaleMin={0}
-          xScaleMin={90}
-          rectFillColor={rectFillColor}
-          />
-      </g>
-
-      </svg>
-    </div>
-  </>
+        <svg className={"three-graphs"} width={svgWidth} height={svgWidth} margin={20}>
+          <g  transform={`translate(${graph3XTranslate}, 0)`}>
+            <Histogram
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={graphWidth}
+            height={graphHeight}
+            hoveredValue={hoveredValue}
+            sendHoveredValue={handleSetHoveredValue}
+            histogramXAttribute={histogramXAttribute}
+            histogramYAttribute={histogramYAttribute}
+            attributes={attributes}
+            yScaleMin={0}
+            xScaleMin={0}
+            />
+          </g>
+          <g  transform={`translate(${graph2XTranslate}, 0)`}>
+            <Histogram
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={graphWidth}
+            height={graphHeight}
+            hoveredValue={hoveredValue}
+            sendHoveredValue={handleSetHoveredValue}
+            histogramXAttribute={histogramTwoXAttribute}
+            histogramYAttribute={histogramTwoYAttribute}
+            attributes={attributes}
+            yScaleMin={0}
+            xScaleMin={86}
+            />
+          </g>
+          <g  transform={`translate(${graph1XTranslate}, 0)`}>
+            <ScatterPlot
+            covidData={covidData}
+            keyedCovidData={keyedCovidData}
+            width={graphWidth}
+            height={graphHeight}
+            hoveredValue={hoveredValue}
+            sendHoveredValue={handleSetHoveredValue}
+            scatterXAttribute={scatterXAttribute}
+            scatterYAttribute={scatterYAttribute}
+            attributes={attributes}
+            yScaleMin={0}
+            xScaleMin={90}
+            />
+          </g>
+        </svg>
+    </>
   )
 }
 export default App
-
-// <div>
-//   <Noteb/>
-// </div>
-
-// <div>
-//   <Maps />
-// </div>
-
-//   function ramp(color, n = 256) {
-//     const canvas = document.createElement('canvas');
-//     const context = canvas.getContext("2d");
-//     for (let i = 0; i < n; ++i) {
-//       context.fillStyle = color(i / (n - 1));
-//       context.fillRect(i, 0, 1, 1);
-//     }
-//     console.log('Thingy', canvas)
-//     return canvas;
-//   }
-//
-// const theCanvas = ramp(scaleSequential([0, 100], interpolateViridis))}
-// <div>
-// {theCanvas}
-// </div>
-
-
-// const Thingy = () => {
-//   return(
-//
-// )
-// }
-
-// <div>
-//   <MapLegend/>
-// </div>
-
-
-// <div>
-//   <Thingy/>
-//   </div>
-
-
-
-
-// const ref = useRef(null)
-//
-//   const handler = useCallback(message => {
-//     switch (message.type) {
-//       case "child-says":
-//         console.log(`The child said: ${message.text}`)
-//     }
-//   }, [])
-//
-//   const [dispatch] = useIframe(handler, { ref })
-//
-//   const onClick = () => dispatch({ type: "parent-says", text: "Hello, Child!" })
-
-// <div>
-//   <p>I am the parent component</p>
-//   <iframe
-//     ref={ref}
-//     id="NYC"
-//     title='NYC Heat Islands, Foliage, and Covid'
-//     src="/iframe-component"/>
-// </div>
-
-
-
 
 // <div>
 //   <div className="divZero">Maps</div>

@@ -4,6 +4,9 @@
   "main": "src/index.js",
   "private": true,
   "dependencies": {
+    "@d3/color-legend": "https://api.observablehq.com/@d3/color-legend.tgz?v=3",
+    "@observablehq/how-to-embed-a-notebook-in-a-react-app": "https://api.observablehq.com/@observablehq/how-to-embed-a-notebook-in-a-react-app.tgz?v=3",
+    "@observablehq/runtime": "4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",

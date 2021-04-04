@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { schemeBlues, scaleThreshold } from 'd3'
-import { MapFill } from './MapFill'
+import { SvgMapFill } from './SvgMapFill'
 // import { useMousePosition } from './useMousePosition'
 
-export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredValue, hoveredValue, keyedCovidData, covidData, mapYAttribute }) => {
+export const SvgMap = ({ boundaries, width, height, mousePosition, sendHoveredValue, hoveredValue, keyedCovidData, covidData, mapYAttribute }) => {
 
   const colorValue = d => d[mapYAttribute]
   const colorScale =
@@ -13,7 +13,7 @@ export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredVa
 
   return(
     <>
-      <MapFill
+      <SvgMapFill
       boundaries={boundaries}
       keyedCovidData={keyedCovidData}
       width={width}
@@ -23,7 +23,7 @@ export const NycMap = ({ boundaries, width, height, mousePosition, sendHoveredVa
       onHover={sendHoveredValue}
       hoveredValue={hoveredValue}
       />
-      {hoveredValue && <MapFill
+      {hoveredValue && <SvgMapFill
       boundaries={boundaries}
       keyedCovidData={keyedCovidData}
       width={width}

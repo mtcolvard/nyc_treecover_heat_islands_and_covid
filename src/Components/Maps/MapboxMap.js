@@ -1,6 +1,6 @@
 import React, {useRef, useEffect, useState } from 'react'
 
-export const Maps2 = ({mapsWidth, mapsHeight}) =>  {
+export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
   const [lng, setLng] = useState(-73.970973)
   const [lat, setLat] = useState(40.716419)
   const [zoom, setZoom] = useState(9)
@@ -76,7 +76,7 @@ export const Maps2 = ({mapsWidth, mapsHeight}) =>  {
         map.setLayoutProperty('treeRasterLayer', 'visibility', 'visible')
         map.setPaintProperty('modzctaVectorLayer', 'line-color', 'hsla(180, 3%, 63%, 1)')
 
-        })    
+        })
       </script>
       </body>
       </html>`}>

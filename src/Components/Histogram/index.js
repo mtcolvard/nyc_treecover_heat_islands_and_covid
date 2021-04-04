@@ -2,7 +2,8 @@ import React, { useState , useCallback } from 'react'
 import ReactDropdown from 'react-dropdown'
 import './style.css'
 import { HistogramMarks } from  './Marks'
-import { AxisBottom } from './AxisBottom'
+// import { AxisBottom } from './AxisBottom'
+import { XAxis } from './XAxis'
 import { AxisLeft } from './AxisLeft'
 import { Dropdown } from './Dropdown'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
@@ -13,13 +14,11 @@ export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredV
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
   const xAxisLabelOffset = 54
-  const yAxisLabelOffset = 50
 
   const siFormat = format('.2s');
   const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
   const yAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
   const xAxisLabel = attributes[histogramXAttribute].label
-  const yAxisLabel = attributes[histogramYAttribute].label
 
   const xValue = d => d[histogramXAttribute]
   const yValue = d => d[histogramYAttribute]
@@ -52,20 +51,12 @@ return(
   <>
     <rect width={width} height={height} fill={rectFillColor} />
       <g transform={`translate(${margin.left},${margin.top})`}>
-          <AxisBottom
+          <XAxis
             xScale={xScale}
             innerHeight={innerHeight}
             tickFormat={xAxisTickFormat}
             tickOffset={8}
           />
-          <text
-            className="axis-label"
-            textAnchor="middle"
-            transform={`translate(${-yAxisLabelOffset},${innerHeight /
-              2}) rotate(-90)`}
-          >
-            {yAxisLabel}
-          </text>
           <AxisLeft
             yScale={yScale}
             innerWidth={innerWidth}
@@ -91,6 +82,15 @@ return(
     </g>
   </>
 )}
+
+
+// <AxisBottom
+//   xScale={xScale}
+//   innerHeight={innerHeight}
+//   tickFormat={xAxisTickFormat}
+//   tickOffset={8}
+// />
+
 
 // <g transform={`translate(${margin.left},${margin.top})`}>
 //   <div className="menus-container">
