@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { select, axisLeft } from 'd3';
 
-export const AxisLeft = ({ yScale, innerWidth }) => {
+export const YAxis = ({ yScale, innerWidth }) => {
   const ref = useRef();
   useEffect(() => {
     const yAxisG = select(ref.current);

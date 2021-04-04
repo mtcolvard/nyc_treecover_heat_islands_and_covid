@@ -1,7 +1,7 @@
 import React, { useState , useCallback } from 'react';
 import './style.css'
-import { AxisBottom } from './AxisBottom'
-import { AxisLeft } from './AxisLeft'
+import { XAxis } from './XAxis'
+import { YAxis } from './YAxis'
 import { ScatterMarks }  from  './Marks'
 import { max, format, scaleLinear, extent } from 'd3'
 
@@ -48,7 +48,7 @@ return(
   <>
     <rect width={width} height={height} fill={rectFillColor} />
     <g transform={`translate(${margin.left},${margin.top})`}>
-      <AxisBottom
+      <XAxis
         xScale={xScale}
         innerHeight={innerHeight}
         tickFormat={xAxisTickFormat}
@@ -62,7 +62,7 @@ return(
       >
         {yAxisLabel}
       </text>
-      <AxisLeft
+      <YAxis
         yScale={yScale}
         innerWidth={innerWidth}
         tickFormat={yAxisTickFormat}

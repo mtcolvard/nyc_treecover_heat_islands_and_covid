@@ -4,7 +4,7 @@ import './style.css'
 import { HistogramMarks } from  './Marks'
 // import { AxisBottom } from './AxisBottom'
 import { XAxis } from './XAxis'
-import { AxisLeft } from './AxisLeft'
+import { YAxis } from './YAxis'
 import { Dropdown } from './Dropdown'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
@@ -54,14 +54,14 @@ return(
           <XAxis
             xScale={xScale}
             innerHeight={innerHeight}
-            tickFormat={xAxisTickFormat}
-            tickOffset={8}
+            // tickFormat={xAxisTickFormat}
+            // tickOffset={8}
           />
-          <AxisLeft
+          <YAxis
             yScale={yScale}
             innerWidth={innerWidth}
-            tickFormat={yAxisTickFormat}
-            tickOffset={5}
+            // tickFormat={yAxisTickFormat}
+            // tickOffset={5}
             />
           <text
             className="axis-label"

@@ -3,15 +3,12 @@
   opacity: 0.8;
 }
 
-.axis-label {
-  font-size: 1em;
-  fill: #635F5D;
-}
 
-.domain {
+/* .marker-line {
+  stroke: black;
+  stroke-width: 2px;
+} */
+
+/* .domain {
   display: none;
-}
-
-/* text {
-  font-size: 2em;
 } */

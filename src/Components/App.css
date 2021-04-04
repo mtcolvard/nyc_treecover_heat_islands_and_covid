@@ -31,16 +31,6 @@ h2 {
         font-size: 2em;
       } */
 
-.tick line {
-  stroke: #C0C0BB;
-}
-.tick text {
-  fill: #635F5D;
-}
-.axis-label {
-  font-size: 1em;
-  fill: #635F5D;
-}
 
 .menus-container {
   display: flex;
@@ -91,14 +81,33 @@ h2 {
 .maps-footer {
   margin-bottom: 2em;
 }
-.axis-label {
-  font-size: 1em;
-  fill: #635F5D;
-}
+
 .three-graphs-div {
   padding: 0 20px;
 }
 .three-graphs {
   display: inline-flex;
   flex-wrap: wrap;
+}
+
+.axis-label {
+  font-size: 0.5em;
+  fill: #635F5D;
+}
+
+text {
+  font-size: 0.5em;
+}
+
+.tick text {
+  /* font-size: 2.7em; */
+  fill: #635F5D;
+  /* dy:.71em; */
+  font-size: 14px;
+
+}
+
+.tick line {
+  stroke: #C0C0BB;
+  /* stroke: #bbbbbb; */
 }

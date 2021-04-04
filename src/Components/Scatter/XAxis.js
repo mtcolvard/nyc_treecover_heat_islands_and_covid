@@ -13,16 +13,20 @@
 //   ))
 
 import { useRef, useEffect } from 'react';
-import { select, axisBottom } from 'd3';
+import { select, axisBottom, format } from 'd3';
 
-export const AxisBottom = ({ xScale, innerHeight }) => {
-  const ref = useRef();
+export const XAxis = ({xScale, innerHeight}) => {
+  const ref = useRef()
   useEffect(() => {
-    const xAxisG = select(ref.current);
-    const xAxis = axisBottom(xScale)
-      .tickSize(-innerHeight)
-      .tickPadding(18);
-    xAxisG.call(xAxis);
-  }, []);
-  return <g transform={`translate(0,${innerHeight})`} ref={ref} />;
-};
+     const xAxisG = select(ref.current)
+     const xAxis = axisBottom(xScale)
+       .tickSize(-innerHeight)
+       .tickPadding(18)
+       // .tickArguments([6, '~s'])
+       .tickValues([40000,80000,120000,160000,200000,240000])
+       .tickFormat(format('~s'))
+     xAxisG.call(xAxis)
+   }, []);
+
+  return <g transform={`translate(0,${innerHeight})`} ref={ref} />
+  }
