@@ -11,7 +11,6 @@ export const XAxis = ({xScale, innerHeight, tickSize, tickPadding}) => {
        .tickPadding(18)
        .tickFormat(format('~s'))
        .tickValues([88,92,96,100])
-       .offset(.5)
      xAxisG.call(xAxis)
    }, []);
 

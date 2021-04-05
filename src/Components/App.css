@@ -85,6 +85,11 @@ h2 {
 .three-graphs-div {
   padding: 0 20px;
 }
+
+.graph-header {
+  display: block;
+}
+
 .three-graphs {
   display: inline-flex;
   flex-wrap: wrap;
@@ -96,7 +101,7 @@ h2 {
 }
 
 text {
-  font-size: 0.5em;
+  font-size: 1.3em;
 }
 
 .tick text {

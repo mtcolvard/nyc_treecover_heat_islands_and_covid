@@ -25,7 +25,7 @@ const attributes = {
   COVID_DEATH_COUNT: { id: 5, value: 'COVID_DEATH_COUNT', label: 'Deaths', domainMin: 1, yColorScale: [10,100,200,250,300,350,400,450,500] },
   PERCENT_POSITIVE: { id: 6, value: 'PERCENT_POSITIVE', label: 'Positive Test Percentage (Cumulative)', domainMin: 1, yColorScale: [4,6,8,10,12,14,16,18,20] },
   TOTAL_COVID_TESTS: { id: 7, value: 'TOTAL_COVID_TESTS', label: 'Total Tests Administered', domainMin: 1, yColorScale: [4000,6000,9000,15000,30000,45000,60000,75000,90000] },
-  ALL_HOUSEHOLDS: { id: 8, value: 'ALL_HOUSEHOLDS', label: 'Median Income: All Households', domainMin: 1, yColorScale: [20000,40000,60000,80000,100000,120000,140000,160000,180000,200000] },
+  ALL_HOUSEHOLDS: { id: 8, value: 'ALL_HOUSEHOLDS', label: 'by median neighborhood household income', domainMin: 1, yColorScale: [20000,40000,60000,80000,100000,120000,140000,160000,180000,200000] },
   FAMILIES: { id: 9, value: 'FAMILIES', label: 'Median Income: Families', domainMin: 1, yColorScale: [20000,40000,60000,80000,100000,120000,140000,160000,180000,200000] },
   FAMILIES_WITH_CHILDREN: { id: 10, value: 'FAMILIES_WITH_CHILDREN', label: 'Median Income: Families with Children', domainMin: 1, yColorScale: [20000,40000,60000,80000,100000,120000,140000,160000,180000,200000] },
   FAMILIES_WITHOUT_CHILDREN: { id: 11, value: 'FAMILIES_WITHOUT_CHILDREN', label: 'Median Income: Families without Children', domainMin: 1, yColorScale: [20000,40000,60000,80000,100000,120000,140000,160000,180000,200000] },
@@ -36,9 +36,9 @@ const attributes = {
   median: {id:16, value:'median', label: 'median', domainMin: 80, ycolorScale: [80,82,84,86,88,90,92,94,96,98,100]},
   stdev: {id:17, value:'stdev', label: 'stdev', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   range: {id:18, value:'range', label: 'range', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
-  majority: {id:19, value:'majority', label: 'majority', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
+  majority: {id:19, value:'majority', label: 'by average neighborhood temperature', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   variance: {id:20, value:'variance', label: 'variance', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
-  treesPerMilesq: {id:21, value:'treesPerMilesq', label: 'treesPerMilesq', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
+  treesPerMilesq: {id:21, value:'treesPerMilesq', label: 'by trees per square mile', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   MODIFIED_ZCTA: {id:22, value:'MODIFIED_ZCTA', label: 'MODIFIED_ZCTA', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
 }
 
@@ -163,17 +163,15 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
       <p>“Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</p>
     </div>
     <div className="three-graphs-div">
-    <p
-      className="axis-label"
-      textAnchor="middle"
-      transform={`translate(${yAxisLabelOffset},${innerHeight /
-        2})`}
-    >
-      {'Confirmed infections per total tests conducted'}
-      </p>
-
+      <svg className="graph-header" width={innerWidth} height={0.33*graphHeight}>
+        <g>
+          <rect x="0" y="0" width={innerWidth} height={0.33*graphHeight} fill={rectFillColor}></rect>
+          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">New Yorker's had drastically different experiences this past year. Neighborhoods with high rates of infection on average</text>
+        </g>
+      </svg>
       <svg className={"three-graphs"} width={svgWidth} height={svgWidth}>
         <g  transform={`translate(${graph3XTranslate}, 0)`}>
+          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">And had far less access to greenspace</text>
           <HistogramTrees
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -191,6 +189,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           />
         </g>
         <g  transform={`translate(${graph2XTranslate}, 0)`}>
+          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">Experienced much higher temperatures</text>
           <Histogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -208,6 +207,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           />
         </g>
         <g  transform={`translate(${graph1XTranslate}, 0)`}>
+          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">Earned far less income</text>
           <ScatterPlot
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -230,6 +230,18 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
   )
 }
 export default App
+
+// Temperatures across NYC neighborhoods vary as much as 16 degrees in neighborhoods lacking foliage and greenspace. August 19th, 2019 Data: USGS, Landsat-8 ARD
+
+
+// <p
+//   className="axis-label"
+//   textAnchor="middle"
+//   transform={`translate(${yAxisLabelOffset},${innerHeight /
+//     2})`}
+// >
+
+  // </p>
 
 // <div>
 //   <Noteb/>

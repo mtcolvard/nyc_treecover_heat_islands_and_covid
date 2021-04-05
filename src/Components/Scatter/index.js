@@ -54,14 +54,6 @@ return(
         tickFormat={xAxisTickFormat}
         tickOffset={8}
       />
-      <text
-        className="axis-label"
-        textAnchor="middle"
-        transform={`translate(${-yAxisLabelOffset},${innerHeight /
-          2}) rotate(-90)`}
-      >
-        {yAxisLabel}
-      </text>
       <YAxis
         yScale={yScale}
         innerWidth={innerWidth}
