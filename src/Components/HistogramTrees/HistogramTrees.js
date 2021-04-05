@@ -2,21 +2,16 @@ import React, { useState , useCallback } from 'react'
 import ReactDropdown from 'react-dropdown'
 import './style.css'
 import { HistogramMarks } from  './Marks'
-// import { AxisBottom } from './AxisBottom'
 import { XAxis } from './XAxis'
 import { YAxis } from './YAxis'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
 export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor }) => {
 
-  const margin = { top: 20, right: 20, bottom: 65, left: 60 }
+  const margin = { top: 20, right: 0, bottom: 102, left: 48 }
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
-  const xAxisLabelOffset = 54
-
-  // const siFormat = format('.2s');
-  // const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
-  // const yAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
+  const xAxisLabelOffset = 48
   const xAxisLabel = attributes[histogramXAttribute].label
 
   const xValue = d => d[histogramXAttribute]
@@ -24,7 +19,6 @@ export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHov
 
   const xScale = scaleLinear()
     .domain([xScaleMin, max(covidData, xValue)])
-    // .domain(extent(covidData, xValue))
     .range([0, innerWidth])
     .nice()
 
@@ -40,7 +34,6 @@ export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHov
     }))
 
   const yScale = scaleLinear()
-    // .domain([yScaleMin, max(binnedData, d => d.y)])
     .domain([yScaleMin, 22])
     .range([innerHeight, 0])
     .nice()
@@ -48,27 +41,15 @@ export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHov
 return(
   <>
     <rect width={width} height={height} fill={rectFillColor} />
-      <g transform={`translate(${margin.left},${margin.top})`}>
+      <g transform={`translate(${margin.left},${margin.top+18})`}>
           <XAxis
             xScale={xScale}
             innerHeight={innerHeight}
-            // tickFormat={xAxisTickFormat}
-            // tickOffset={8}
           />
           <YAxis
             yScale={yScale}
             innerWidth={innerWidth}
-            // tickFormat={yAxisTickFormat}
-            // tickOffset={5}
             />
-          <text
-            className="axis-label"
-            x={innerWidth / 2}
-            y={innerHeight + xAxisLabelOffset}
-            textAnchor="middle"
-          >
-            {xAxisLabel}
-          </text>
           <HistogramMarks
             binnedData={binnedData}
             xScale={xScale}
@@ -77,6 +58,25 @@ return(
             circleRadius={2}
             innerHeight={innerHeight}
           />
+          <text
+            className="chart-title"
+            transform={`translate(${0}, -18)`}
+            textAnchor="start"
+          >And had far less access to greenspace
+          </text>
+          <text
+            className="axis-label" x={innerWidth/2} y={innerHeight + xAxisLabelOffset}
+            textAnchor="middle"
+          >Distribution of neighborhoods
+          </text>
+          <text
+            className="axis-label"
+            x={innerWidth/2} y={innerHeight + xAxisLabelOffset + 20}
+            // alignment-baseling="hanging"
+            textAnchor="middle"
+          >by tree cover per square mile
+          </text>
+
     </g>
   </>
 )}

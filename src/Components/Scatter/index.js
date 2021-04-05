@@ -9,17 +9,12 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
 
   const circleRadius = 8
   const fadeOpacity = 0.3
-  const margin = { top: 20, right: 20, bottom: 65, left: 80 }
+  const margin = { top: 20, right: 0, bottom: 102, left: 48 }
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
-  const xAxisLabelOffset = 54
+  const xAxisLabelOffset = 48
   const yAxisLabelOffset = 50
 
-
-  const siFormat = format('');
-  const percFormat = format('');
-  const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B')
-  const yAxisTickFormat = tickValue => percFormat(tickValue).replace('G', 'B')
   const xAxisLabel = attributes[scatterXAttribute].label
   const yAxisLabel = attributes[scatterYAttribute].label
 
@@ -47,27 +42,15 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
 return(
   <>
     <rect width={width} height={height} fill={rectFillColor} />
-    <g transform={`translate(${margin.left},${margin.top})`}>
+    <g transform={`translate(${margin.left},${margin.top+18})`}>
       <XAxis
         xScale={xScale}
         innerHeight={innerHeight}
-        tickFormat={xAxisTickFormat}
-        tickOffset={8}
       />
       <YAxis
         yScale={yScale}
         innerWidth={innerWidth}
-        tickFormat={yAxisTickFormat}
-        tickOffset={5}
         />
-      <text
-        className="axis-label"
-        x={innerWidth / 2}
-        y={innerHeight + xAxisLabelOffset}
-        textAnchor="middle"
-      >
-        {xAxisLabel}
-      </text>
       {hoveredValue!==false && <ScatterMarks
         data={covidData}
         xValue={xValue}
@@ -89,19 +72,24 @@ return(
         fillColor={'#08519C'}
         opacity={1}
       />}
-
+      <text
+        className="chart-title"
+        transform={`translate(${0}, -18)`}
+        textAnchor="start"
+      >Earned far less income
+      </text>
+      <text
+        className="axis-label" x={innerWidth/2} y={innerHeight + xAxisLabelOffset}
+        textAnchor="middle"
+      >Distribution of neighborhoods
+      </text>
+      <text
+        className="axis-label"
+        x={innerWidth/2} y={innerHeight + xAxisLabelOffset + 20}
+        // alignment-baseling="hanging"
+        textAnchor="middle"
+      >by median household income
+      </text>
     </g>
   </>
 )}
-
-
-// {hoveredValue && <ScatterMarks
-//   data={hoveredValueDataArray}
-//   xValue={xValue}
-//   yValue={yValue}
-//   xScale={xScale}
-//   yScale={yScale}
-//   circleRadius={circleRadius}
-//   fillColor={'#08519C'}
-//   opacity={1}
-// />}

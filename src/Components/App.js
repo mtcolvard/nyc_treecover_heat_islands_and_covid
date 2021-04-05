@@ -16,7 +16,6 @@ import { SvgMap } from './Maps/SvgMap'
 import { MapboxMap } from './Maps/MapboxMap'
 // import { MapLegend } from './Maps/MapLegend'
 
-
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
   BOROUGH_GROUP: { id: 2, value: 'BOROUGH_GROUP', label: 'Borough', domainMin: 0, yColorScale: [10,100,200,250,300,350,400,450,500]  },
@@ -56,7 +55,7 @@ const svgHeight = innerHeight
 
 const centerWidth = innerWidth/2
 const graphWidth = innerWidth/3
-const graphHeight = 0.67 * centerWidth
+const graphHeight = 0.72 * centerWidth
 const graphOffset = innerWidth/6
 const graph3XTranslate = centerWidth + graphOffset
 const graph2XTranslate = centerWidth - graphOffset
@@ -149,7 +148,7 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
     </div>
     <div className="captions maps-footer">
       <div className="caption-1" width={innerWidth/2} height={'1em'}>
-        <p>Temperature variations by neighborhood on a hot August day, typical pattern</p>
+        <p>Temperature variations by neighborhood on a typically hot August day.</p>
         <p className="footnote">Data: USGS, Landsat-8 ARD</p>
       </div>
       <div className="caption-2" width={innerWidth/2} height={'1em'}>
@@ -169,9 +168,9 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">New Yorker's had drastically different experiences this past year. Neighborhoods with high rates of infection on average</text>
         </g>
       </svg>
-      <svg className={"three-graphs"} width={svgWidth} height={svgWidth}>
+      <svg className={"three-graphs"} width={svgWidth} height={svgHeight}>
         <g  transform={`translate(${graph3XTranslate}, 0)`}>
-          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">And had far less access to greenspace</text>
+
           <HistogramTrees
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -189,7 +188,6 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           />
         </g>
         <g  transform={`translate(${graph2XTranslate}, 0)`}>
-          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">Experienced much higher temperatures</text>
           <Histogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -207,7 +205,6 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           />
         </g>
         <g  transform={`translate(${graph1XTranslate}, 0)`}>
-          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">Earned far less income</text>
           <ScatterPlot
           covidData={covidData}
           keyedCovidData={keyedCovidData}

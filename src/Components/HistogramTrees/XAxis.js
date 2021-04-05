@@ -7,9 +7,8 @@ export const XAxis = ({xScale, innerHeight, tickSize, tickPadding}) => {
   useEffect(() => {
      const xAxisG = select(ref.current)
      const xAxis = axisBottom(xScale)
-       // .tickSize(-innerHeight)
-       .tickPadding(18)
-       // .tickFormat((tickValue) => tickValue)
+       .tickSize(-innerHeight)
+       .tickPadding(12)
        .tickFormat(format('~s'))
        .tickValues([1000,2000,3000,4000,5000,6000])
      xAxisG.call(xAxis)
