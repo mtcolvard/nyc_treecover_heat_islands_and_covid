@@ -6,8 +6,8 @@ import { useBoundaries } from './Data/useBoundaries'
 import { useCovidData } from './Data/useCovidData'
 import { useMousePosition } from './aUtilities/useMousePosition'
 import { BinnedScatter } from './BinnedScatter/index'
-import { Histogram } from './Histogram/index'
-import { HistogramTrees } from './HistogramTrees/HistogramTrees'
+import { DegreeHistogram } from './DegreeHistogram/index'
+import { TreesHistogram } from './TreesHistogram/index'
 import { ScatterPlot } from './Scatter/index'
 import { SvgMap } from './Maps/SvgMap'
 import { MapboxMap } from './Maps/MapboxMap'
@@ -36,23 +36,25 @@ const attributes = {
   treesPerMilesq: {id:21, value:'treesPerMilesq', label: 'by trees per square mile', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   MODIFIED_ZCTA: {id:22, value:'MODIFIED_ZCTA', label: 'MODIFIED_ZCTA', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
 }
-const margin = { top: 20, right: 20, bottom: 20, left:20 }
+const margin = { top: 20, right:10, bottom: 20, left:10 }
+// const margin = { top: 0, right: 0, bottom: 0, left:0 }
 const width = window.innerWidth
 const height = window.innerHeight
 const innerWidth = width - (margin.right + margin.left)
 const innerHeight = height - (margin.top + margin.bottom)
+// const innerWidth = width
+// const innerHeight = height
 let mapsWidth = null
-if (window.innerWidth < 640) {mapsWidth = width
+if (window.innerWidth < 640) {
+  mapsWidth = innerWidth
 } else {
   mapsWidth = innerWidth/2
 }
 const mapsHeight = mapsWidth
-const svgWidth = innerWidth
-const svgHeight = innerHeight
-const centerWidth = innerWidth/2
 const graphWidth = 360
 const graphHeight = 360
 const graphOffset = 180
+const centerWidth = innerWidth/2
 const graph3XTranslate = centerWidth + graphOffset
 const graph2XTranslate = centerWidth - graphOffset
 const graph1XTranslate = 0
@@ -94,29 +96,32 @@ const App = () => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
 
+    console.log('width', 'innerWidth', width, innerWidth)
 
 // <p>Cumulative infection rate by neighborhood: Confirmed cases per  total tests conducted</p>
 
 // <p>Infection rate by neighborhood: Confirmed cases per total tests conducted since March 2020</p>
 
 // <p>Antibody Prevalence: Percent of people who have tested positive since March 2020, cumulative by neighborhood</p>
+// <p>
+// Antibody Prevalence: Confirmed infections per total tests conducted, cumulative by neighborhood</p>
 
 
   const graphMargin = { top: 20, right: 20, bottom: 102, left: 48 }
 
   return (
-  <>
-    <div>
-      <div className="headline" width={innerWidth} height={width/6}>
-        <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
+    <>
+    <div className="main-container">
+      <div>
+        <div className="headline" width={innerWidth} height={innerWidth/6}>
+          <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
+        </div>
       </div>
-    </div>
     <div className="captions">
     </div>
 
     <div className="iframe-svg-container">
       <div  className="flex-parent-inline flex-parent--wrap ">
-
         <div className="flex-child">
           <div className="maps-header"
           style={{width:mapsWidth, height:0.13*mapsHeight}}>
@@ -135,8 +140,7 @@ const App = () => {
         </div>
         <div className="flex-child">
           <div className="maps-header"style={{width:mapsWidth, height:0.13*mapsHeight}}>
-          <p>
-          Antibody Prevalence: Confirmed infections per total tests conducted, cumulative by neighborhood</p>
+          <p>Cumulative infection rate by neighborhood: Confirmed cases per  total tests conducted</p>
           </div>
           <svg className="svg-map" width={mapsWidth} height={mapsHeight} margin={0}>
             <g transform={`translate(0, 0)`} >
@@ -161,10 +165,20 @@ const App = () => {
         </div>
       </div>
     </div>
-    <div>
-      <p>“Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</p>
+    <div className="quote" width={innerWidth}>
+      <p>
+      “Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</p>
     </div>
-      <div>
+    <div className="charts-header-lead" width={innerWidth}>
+      <p>
+      New Yorker's had drastically different experiences this past year. </p>
+    </div>
+    <div className="charts-header" width={innerWidth}>
+      <p>
+      Neighborhoods with high rates of infection on average:</p>
+    </div>
+
+      <div width={innerWidth}>
         <svg className={"three-graphs w360 h360"}>
           <ScatterPlot
           covidData={covidData}
@@ -183,7 +197,7 @@ const App = () => {
           />
         </svg>
         <svg className={"three-graphs w360 h360"} >
-          <HistogramTrees
+          <TreesHistogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
           width={graphWidth}
@@ -202,7 +216,7 @@ const App = () => {
           />
         </svg>
         <svg className={"three-graphs w360 h360"} >
-          <Histogram
+          <DegreeHistogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
           width={graphWidth}
@@ -220,19 +234,14 @@ const App = () => {
           />
         </svg>
       </div>
-      <div>
-        <svg className="graph-header" width={innerWidth} height={0.33*graphHeight}>
-          <g>
-            <rect x="0" y="0" width={innerWidth} height={0.33*graphHeight} fill={rectFillColor}></rect>
-            <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">New Yorker's had drastically different experiences this past year. Neighborhoods with high rates of infection on average</text>
-          </g>
-        </svg>
-        </div>
-
-      </>
+    </div>
+    </>
   )
 }
 export default App
+
+
+
 
 // flex-parent flex-parent--column-mmwidth={graphWidth} height={graphHeight}
 
