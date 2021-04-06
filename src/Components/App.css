@@ -21,6 +21,11 @@ h2 {
   padding-left: 40px;
   padding-top: 0.75em;
 }
+.degree-legend{
+  width: 315px;
+  /* position: relative;
+  top: 80px; */
+}
 .svg-map {
   padding: 0 0 0 0;
   background: hsla(185, 3%, 88%, 1);

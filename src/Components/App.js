@@ -84,10 +84,7 @@ const App = () => {
   const handleSetHoveredValue = useCallback((d) => {
     d ? setHoveredValue(d) : setHoveredValue(null)
   }, [])
-  // const [hoveredValue, setHoveredValue] = useState(null)
-  // const handleSetHoveredValue = useCallback((d) => {
-  //   d ? setHoveredValue([d]) : setHoveredValue(null)
-  // }, [])
+
   if (!boundaries || !covidData || !mapsWidth) {
     return <pre>Loading...</pre>
   }
@@ -95,8 +92,6 @@ const App = () => {
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
-
-    console.log('width', 'innerWidth', width, innerWidth)
 
 // <p>Cumulative infection rate by neighborhood: Confirmed cases per  total tests conducted</p>
 
@@ -108,12 +103,11 @@ const App = () => {
 
 
   const graphMargin = { top: 20, right: 20, bottom: 102, left: 48 }
-
   return (
     <>
       <div>
         <div className="headline" width={innerWidth} height={innerWidth/6}>
-          <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
+          <h1>Urban "heat islands" exacerbate pandemic year suffering for New York City's poorest residents</h1>
         </div>
       </div>
     <div className="captions">
@@ -123,9 +117,40 @@ const App = () => {
       <div  className="flex-parent-inline flex-parent--wrap ">
         <div className="flex-child">
           <div className="maps-header"
-          style={{width:mapsWidth}}>
-          <p >
-          Temperature variations by neighborhood on a typically hot August day</p>
+          style={{width:mapsWidth}} >
+          <p className="temperature-heading">
+            Typical temperature dispersion on a hot August day, degrees Fahrenheit</p>
+
+            {width < 1052 ?
+               null : <p style={{width:'1.3em', height:'1.3em', margin: '4.5px'}}></p> }
+
+
+          </div>
+          <div className='degree-legend round  px12 py12 txt-s'>
+            <div className='grid mb6'>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#ffffb2' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#ffe07d' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#febe54' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#fe9741' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#fb8037' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#f7672f' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#f34e26' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#ed3620' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#dd2422' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#bd0026' }}></div>
+            </div>
+            <div className='grid txt-xs'>
+              <div className='col flex-child--grow align-r'>84</div>
+              <div className='col flex-child--grow align-r'>86</div>
+              <div className='col flex-child--grow align-r'>88</div>
+              <div className='col flex-child--grow align-r'>90</div>
+              <div className='col flex-child--grow align-r'>92</div>
+              <div className='col flex-child--grow align-r'>94</div>
+              <div className='col flex-child--grow align-r'>96</div>
+              <div className='col flex-child--grow align-r'>98</div>
+              <div className='col flex-child--grow align-r'>100</div>
+              <div className='col flex-child--grow align-r'>102</div>
+            </div>
           </div>
           <MapboxMap
             mapsWidth={mapsWidth}
@@ -139,9 +164,36 @@ const App = () => {
         </div>
         <div></div>
         <div className="flex-child">
-          <div className="maps-header"style={{width:mapsWidth}}>
-          <p>Cumulative infection rate by neighborhood: confirmed cases per  total tests conducted</p>
+          <div className="maps-header" style={{width:mapsWidth}}>
+          <p className="infection-div" >Cumulative rate of infections by neighborhood: confirmed cases per total tests conducted, %</p>
           </div>
+          <div className='degree-legend round  px12 py12 txt-s'>
+            <div className='grid mb6'>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#f7fbff' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#e1edf8' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#cadef0' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#abcfe5' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#82badb' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#59a1cf' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#3787c0' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#1c6aaf' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#0b4d94' }}></div>
+              <div className='col degree-scale h12' style={{ backgroundColor: '#08306b' }}></div>
+            </div>
+            <div className='grid txt-xs'>
+              <div className='col flex-child--grow align-r'>4</div>
+              <div className='col flex-child--grow align-r'>6</div>
+              <div className='col flex-child--grow align-r'>8</div>
+              <div className='col flex-child--grow align-r'>10</div>
+              <div className='col flex-child--grow align-r'>12</div>
+              <div className='col flex-child--grow align-r'>14</div>
+              <div className='col flex-child--grow align-r'>16</div>
+              <div className='col flex-child--grow align-r'>18</div>
+              <div className='col flex-child--grow align-r'>20</div>
+              <div className='col flex-child--grow align-r'>22</div>
+            </div>
+          </div>
+
           <svg className="svg-map" width={mapsWidth} height={mapsHeight} margin={0}>
             <g transform={`translate(0, 0)`} >
               <SvgMap
@@ -173,7 +225,7 @@ const App = () => {
     <hr className='txt-hr'/>
     <div className="charts-header-lead" width={innerWidth}>
       <p>
-      New Yorker's had drastically different experiences this past year. </p>
+      New Yorkers had drastically different experiences this past year. </p>
     </div>
     <div className="charts-header" width={innerWidth}>
       <p>
