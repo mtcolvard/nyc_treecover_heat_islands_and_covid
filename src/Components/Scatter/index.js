@@ -5,11 +5,10 @@ import { YAxis } from './YAxis'
 import { ScatterMarks }  from  './Marks'
 import { max, format, scaleLinear, extent } from 'd3'
 
-export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredValue, sendHoveredValue, scatterXAttribute, scatterYAttribute, attributes, xScaleMin, yScaleMin, rectFillColor }) => {
+export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredValue, sendHoveredValue, scatterXAttribute, scatterYAttribute, attributes, xScaleMin, yScaleMin, rectFillColor, margin }) => {
 
   const circleRadius = 8
   const fadeOpacity = 0.3
-  const margin = { top: 20, right: 0, bottom: 102, left: 48 }
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
   const xAxisLabelOffset = 48

@@ -5,16 +5,12 @@ import './App.css'
 import { useBoundaries } from './Data/useBoundaries'
 import { useCovidData } from './Data/useCovidData'
 import { useMousePosition } from './aUtilities/useMousePosition'
-// import { Dropdown } from './aReference/Dropdown'
-
 import { BinnedScatter } from './BinnedScatter/index'
 import { Histogram } from './Histogram/index'
 import { HistogramTrees } from './HistogramTrees/HistogramTrees'
 import { ScatterPlot } from './Scatter/index'
-
 import { SvgMap } from './Maps/SvgMap'
 import { MapboxMap } from './Maps/MapboxMap'
-// import { MapLegend } from './Maps/MapLegend'
 
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
@@ -40,31 +36,28 @@ const attributes = {
   treesPerMilesq: {id:21, value:'treesPerMilesq', label: 'by trees per square mile', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
   MODIFIED_ZCTA: {id:22, value:'MODIFIED_ZCTA', label: 'MODIFIED_ZCTA', domainMin: 1, ycolorScale: [4,6,8,10,12,14,16,18,20]},
 }
-
 const margin = { top: 20, right: 20, bottom: 20, left:20 }
 const width = window.innerWidth
 const height = window.innerHeight
-
 const innerWidth = width - (margin.right + margin.left)
 const innerHeight = height - (margin.top + margin.bottom)
-
-const mapsWidth = innerWidth/2
+let mapsWidth = null
+if (window.innerWidth < 640) {mapsWidth = width
+} else {
+  mapsWidth = innerWidth/2
+}
 const mapsHeight = mapsWidth
 const svgWidth = innerWidth
 const svgHeight = innerHeight
-
 const centerWidth = innerWidth/2
-const graphWidth = innerWidth/3
-const graphHeight = 0.72 * centerWidth
-const graphOffset = innerWidth/6
+const graphWidth = 360
+const graphHeight = 360
+const graphOffset = 180
 const graph3XTranslate = centerWidth + graphOffset
 const graph2XTranslate = centerWidth - graphOffset
 const graph1XTranslate = 0
-// const rectFillColor = 'hsla(185, 3%, 94%, 1)'
 const rectFillColor = 'hsla(185, 3%, 83%, 0.5)'
 
-// const dropdownWidth = 40
-// const dropdownHeight = 160
 
 const App = () => {
   const boundaries = useBoundaries()
@@ -84,7 +77,6 @@ const App = () => {
   const [histogramYAttribute, setHistogramYAttribute] = useState(histogramInitialYAttribute)
   const [histogramTwoXAttribute, setHistogramTwoXAttribute] = useState(histogramTwoInitialXAttribute)
   const [histogramTwoYAttribute, setHistogramTwoYAttribute] = useState(histogramTwoInitialYAttribute)
-
   const mousePosition = [0, 0]
   const [hoveredValue, setHoveredValue] = useState(null)
   const handleSetHoveredValue = useCallback((d) => {
@@ -94,83 +86,103 @@ const App = () => {
   // const handleSetHoveredValue = useCallback((d) => {
   //   d ? setHoveredValue([d]) : setHoveredValue(null)
   // }, [])
-
-  if (!boundaries || !covidData) {
+  if (!boundaries || !covidData || !mapsWidth) {
     return <pre>Loading...</pre>
   }
-
   const keyedCovidData = new Map()
     covidData.forEach(d => {
       keyedCovidData.set(d.MODIFIED_ZCTA, d)
     })
 
-console.log('mapsWidth', mapsWidth, mapsHeight)
 
-// <p>Antibody Prevalence: Confirmed infections per total tests conducted, cumulative by neighborhood</p>
+// <p>Cumulative infection rate by neighborhood: Confirmed cases per  total tests conducted</p>
+
+// <p>Infection rate by neighborhood: Confirmed cases per total tests conducted since March 2020</p>
+
 // <p>Antibody Prevalence: Percent of people who have tested positive since March 2020, cumulative by neighborhood</p>
-// <p>Rate of infection per total tests conducted , cumulative by neighborhood</p>
 
- const yAxisLabelOffset = 50
+
+  const graphMargin = { top: 20, right: 20, bottom: 102, left: 48 }
+
   return (
   <>
     <div>
       <div className="headline" width={innerWidth} height={width/6}>
         <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
       </div>
-      <div className="captions">
-        <p>Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
-        <p>COVID-positive test rates are especially high in low-income neighborhoods</p>
-      </div>
     </div>
+    <div className="captions">
+    </div>
+
     <div className="iframe-svg-container">
-      <div>
-        <MapboxMap
-          mapsWidth={mapsWidth}
-          mapsHeight={mapsHeight}/>
-      </div>
-      <div>
-        <svg className="svg-map" width={mapsWidth} height={mapsHeight} margin={0, 20}>
-          <g transform={`translate(0, 0)`} >
-            <SvgMap
-              boundaries={boundaries}
-              covidData={covidData}
-              keyedCovidData={keyedCovidData}
-              width={mapsWidth}
-              height={mapsHeight}
-              mousePosition={mousePosition}
-              sendHoveredValue={handleSetHoveredValue}
-              hoveredValue={hoveredValue}
-              mapYAttribute={mapYAttribute}
-            />
-          </g>
-        </svg>
-      </div>
-    </div>
-    <div className="captions maps-footer">
-      <div className="caption-1" width={innerWidth/2} height={'1em'}>
-        <p>Temperature variations by neighborhood on a typically hot August day.</p>
-        <p className="footnote">Data: USGS, Landsat-8 ARD</p>
-      </div>
-      <div className="caption-2" width={innerWidth/2} height={'1em'}>
-        <p>Antibody Prevalence: Confirmed infections per total residents tested, cumulative by neighborhood</p>
+      <div  className="flex-parent-inline flex-parent--wrap ">
 
-
-        <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
+        <div className="flex-child">
+          <div className="maps-header"
+          style={{width:mapsWidth, height:0.13*mapsHeight}}>
+          <p >
+          Temperature variations by neighborhood on a typically hot August day</p>
+          </div>
+          <MapboxMap
+            mapsWidth={mapsWidth}
+            mapsHeight={mapsHeight}/>
+          <div className="maps-footer"
+          style={{width:mapsWidth, height:0.2*mapsHeight}}>
+            <p>
+            Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
+            <p className="footnote">Data: USGS, Landsat-8 ARD</p>
+          </div>
+        </div>
+        <div className="flex-child">
+          <div className="maps-header"style={{width:mapsWidth, height:0.13*mapsHeight}}>
+          <p>
+          Antibody Prevalence: Confirmed infections per total tests conducted, cumulative by neighborhood</p>
+          </div>
+          <svg className="svg-map" width={mapsWidth} height={mapsHeight} margin={0}>
+            <g transform={`translate(0, 0)`} >
+              <SvgMap
+                boundaries={boundaries}
+                covidData={covidData}
+                keyedCovidData={keyedCovidData}
+                width={mapsWidth}
+                height={mapsHeight}
+                mousePosition={mousePosition}
+                sendHoveredValue={handleSetHoveredValue}
+                hoveredValue={hoveredValue}
+                mapYAttribute={mapYAttribute}
+              />
+            </g>
+          </svg>
+            <div className="maps-footer"
+            style={{width:mapsWidth, height:0.2*mapsHeight}}>
+              <p>COVID-positive test rates are especially high in low-income neighborhoods</p>
+              <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
+            </div>
+        </div>
       </div>
     </div>
     <div>
       <p>“Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</p>
     </div>
-    <div className="three-graphs-div">
-      <svg className="graph-header" width={innerWidth} height={0.33*graphHeight}>
-        <g>
-          <rect x="0" y="0" width={innerWidth} height={0.33*graphHeight} fill={rectFillColor}></rect>
-          <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">New Yorker's had drastically different experiences this past year. Neighborhoods with high rates of infection on average</text>
-        </g>
-      </svg>
-      <svg className={"three-graphs"} width={svgWidth} height={svgHeight}>
-        <g  transform={`translate(${graph3XTranslate}, 0)`}>
-
+      <div>
+        <svg className={"three-graphs w360 h360"}>
+          <ScatterPlot
+          covidData={covidData}
+          keyedCovidData={keyedCovidData}
+          width={graphWidth}
+          height={graphHeight}
+          hoveredValue={hoveredValue}
+          sendHoveredValue={handleSetHoveredValue}
+          scatterXAttribute={scatterXAttribute}
+          scatterYAttribute={scatterYAttribute}
+          attributes={attributes}
+          yScaleMin={0}
+          xScaleMin={0}
+          rectFillColor={rectFillColor}
+          margin={graphMargin}
+          />
+        </svg>
+        <svg className={"three-graphs w360 h360"} >
           <HistogramTrees
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -185,9 +197,11 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           yScaleMax={22}
           xScaleMin={0}
           rectFillColor={rectFillColor}
+          margin={graphMargin}
+
           />
-        </g>
-        <g  transform={`translate(${graph2XTranslate}, 0)`}>
+        </svg>
+        <svg className={"three-graphs w360 h360"} >
           <Histogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -202,31 +216,86 @@ console.log('mapsWidth', mapsWidth, mapsHeight)
           xScaleMin={86}
           xScaleMax={100}
           rectFillColor={rectFillColor}
+          margin={graphMargin}
           />
-        </g>
-        <g  transform={`translate(${graph1XTranslate}, 0)`}>
-          <ScatterPlot
-          covidData={covidData}
-          keyedCovidData={keyedCovidData}
-          width={graphWidth}
-          height={graphHeight}
-          hoveredValue={hoveredValue}
-          sendHoveredValue={handleSetHoveredValue}
-          scatterXAttribute={scatterXAttribute}
-          scatterYAttribute={scatterYAttribute}
-          attributes={attributes}
-          yScaleMin={0}
-          xScaleMin={0}
-          rectFillColor={rectFillColor}
-          />
-      </g>
+        </svg>
+      </div>
+      <div>
+        <svg className="graph-header" width={innerWidth} height={0.33*graphHeight}>
+          <g>
+            <rect x="0" y="0" width={innerWidth} height={0.33*graphHeight} fill={rectFillColor}></rect>
+            <text x={graphOffset/2} y={0.165*graphHeight} className="graph-header" fill="black">New Yorker's had drastically different experiences this past year. Neighborhoods with high rates of infection on average</text>
+          </g>
+        </svg>
+        </div>
 
-      </svg>
-    </div>
-  </>
+      </>
   )
 }
 export default App
+
+// flex-parent flex-parent--column-mmwidth={graphWidth} height={graphHeight}
+
+// <div className="flex-parent flex-parent--column-mm">
+//   <svg className={"three-graphs flex-child "}>
+//     <ScatterPlot
+//     covidData={covidData}
+//     keyedCovidData={keyedCovidData}
+//     width={graphWidth}
+//     height={graphHeight}
+//     hoveredValue={hoveredValue}
+//     sendHoveredValue={handleSetHoveredValue}
+//     scatterXAttribute={scatterXAttribute}
+//     scatterYAttribute={scatterYAttribute}
+//     attributes={attributes}
+//     yScaleMin={0}
+//     xScaleMin={0}
+//     rectFillColor={rectFillColor}
+//     />
+//   </svg>
+//   <svg className={"three-graphs flex-child"} width={graphWidth} height={graphHeight}>
+//     <HistogramTrees
+//     covidData={covidData}
+//     keyedCovidData={keyedCovidData}
+//     width={graphWidth}
+//     height={graphHeight}
+//     hoveredValue={hoveredValue}
+//     sendHoveredValue={handleSetHoveredValue}
+//     histogramXAttribute={histogramXAttribute}
+//     histogramYAttribute={histogramYAttribute}
+//     attributes={attributes}
+//     yScaleMin={0}
+//     yScaleMax={22}
+//     xScaleMin={0}
+//     rectFillColor={rectFillColor}
+//     />
+//   </svg>
+//   <svg className={"three-graphs flex-child"} width={graphWidth} height={graphHeight}>
+//
+//     <Histogram
+//     covidData={covidData}
+//     keyedCovidData={keyedCovidData}
+//     width={graphWidth}
+//     height={graphHeight}
+//     hoveredValue={hoveredValue}
+//     sendHoveredValue={handleSetHoveredValue}
+//     histogramXAttribute={histogramTwoXAttribute}
+//     histogramYAttribute={histogramTwoYAttribute}
+//     attributes={attributes}
+//     yScaleMin={0}
+//     xScaleMin={86}
+//     xScaleMax={100}
+//     rectFillColor={rectFillColor}
+//     />
+//   </svg>
+// </div>
+
+
+// <g  transform={`translate(${graph3XTranslate}, 0)`}>
+// <g  transform={`translate(${graph2XTranslate}, 0)`}>
+// <g  transform={`translate(${graph1XTranslate}, 0)`}>
+
+
 
 // Temperatures across NYC neighborhoods vary as much as 16 degrees in neighborhoods lacking foliage and greenspace. August 19th, 2019 Data: USGS, Landsat-8 ARD
 

@@ -30,7 +30,8 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
         container: 'map', // container id
         style: 'mapbox://styles/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8',
         center: [${lng}, ${lat}],
-        zoom: ${zoom}
+        zoom: ${zoom},
+        scrollZoom: false,
         });
         map.on('load', () => {
           map.addSource('temperatureRaster', {

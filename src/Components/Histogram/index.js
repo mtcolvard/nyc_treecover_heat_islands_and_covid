@@ -7,9 +7,8 @@ import { XAxis } from './XAxis'
 import { YAxis } from './YAxis'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
-export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor }) => {
+export const Histogram = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor, margin }) => {
 
-  const margin = { top: 20, right: 0, bottom: 102, left: 48 }
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
   const xAxisLabelOffset = 48
@@ -46,14 +45,10 @@ return(
           <XAxis
             xScale={xScale}
             innerHeight={innerHeight}
-            // tickFormat={xAxisTickFormat}
-            // tickOffset={8}
           />
           <YAxis
             yScale={yScale}
             innerWidth={innerWidth}
-            // tickFormat={yAxisTickFormat}
-            // tickOffset={5}
             />
           <HistogramMarks
             binnedData={binnedData}

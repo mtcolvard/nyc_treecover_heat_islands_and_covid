@@ -1,39 +1,60 @@
-.App {
-box-sizing: border-box;
-
-}
 
 pre {
-  font-size: 7em;
+  font-size: 4em;
 }
-
-/* body {
-  margin: 20;
-} */
-
 h1 {
 font-size:2em;
 text-align: center;
 }
-
 h2 {
   font-size:1rem;
 }
-
 .headline {
   margin:2em;
 }
-
 .headline-indent {
   padding-left: 40px;
   padding-top: 0.75em;
 }
-/* text {
-        font-size: 2em;
-      } */
+.svg-map {
+  padding: 0 0 0 0;
+  background: hsla(185, 3%, 88%, 1);
+}
+.maps-header {
+  padding: 0 0.8em 0 0.8em;
+  margin-bottom: 0.5em;
+}
+.maps-footer {
+  padding: 0 0.8em 2em 0.8em;
+}
+.footnote {
+  text-align: right;
+  font-size: .66em;
+}
+.three-graphs-div {
+  padding: 0 20px;
+}
+.chart-title {
+  font-size:1.1rem;
+  fill: #635F5D;
+}
+.axis-label {
+  font-size: 0.5em;
+  fill: #635F5D;
+}
+text {
+  font-size: 1.3em;
+}
+.tick text {
+  fill: #635F5D;
+  font-size: 14px;
+}
+.tick line {
+  stroke: #C0C0BB;
+  /* stroke: #bbbbbb; */
+}
 
-
-.menus-container {
+/* .menus-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,75 +76,4 @@ h2 {
 .Dropdown-menu {
   max-height: 400px;
   max-width: 300px;
-}
-
-.iframe-svg-container {
-  display: inline-flex;
-  margin: 0 20px;
-}
-
-.svg-map {
-  padding: 0 0 0 0;
-}
-
-.captions {
-  /* display: flex;
-  justify-content: space-around; */
-  columns: 2;
-  padding: 0 20px 0.25em 20px;
-  margin-left: 0.25em;
-}
-
-.footnote {
-  /* justify-content: flex-end; */
-  padding-top: 0.25em;
-  margin: 0 20px 0px 0px;
-}
-.maps-footer {
-  margin-bottom: 2em;
-}
-
-.three-graphs-div {
-  padding: 0 20px;
-}
-
-.graph-header {
-  display: block;
-}
-
-.three-graphs {
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-
-.chart-title {
-  font-size:1.1rem;
-  fill: #635F5D;
-
-}
-
-.axis-label {
-  font-size: 0.5em;
-  fill: #635F5D;
-}
-
-text {
-  font-size: 1.3em;
-}
-
-/* .xAxis-tspan {
-  dy: 1.3em;
 } */
-
-.tick text {
-  /* font-size: 2.7em; */
-  fill: #635F5D;
-  /* dy:.71em; */
-  font-size: 14px;
-
-}
-
-.tick line {
-  stroke: #C0C0BB;
-  /* stroke: #bbbbbb; */
-}

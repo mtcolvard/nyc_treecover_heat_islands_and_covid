@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {select, axisBottom, format} from 'd3'
 
-export const XAxis = ({xScale, innerHeight, tickSize, tickPadding}) => {
+export const XAxis = ({xScale, innerHeight}) => {
   const ref = useRef()
 
   useEffect(() => {

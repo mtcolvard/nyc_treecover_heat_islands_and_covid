@@ -6,9 +6,8 @@ import { XAxis } from './XAxis'
 import { YAxis } from './YAxis'
 import { schemeBlues, scaleLinear, format, max, extent, bin, sum, count, mean } from 'd3'
 
-export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor }) => {
+export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHoveredValue, histogramXAttribute, histogramYAttribute, attributes, xScaleMin, xScaleMax, yScaleMin, yScaleMax, rectFillColor, margin }) => {
 
-  const margin = { top: 20, right: 0, bottom: 102, left: 48 }
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
   const xAxisLabelOffset = 48
@@ -41,7 +40,7 @@ export const HistogramTrees = ({ covidData, width, height, hoveredValue, sendHov
 return(
   <>
     <rect width={width} height={height} fill={rectFillColor} />
-      <g transform={`translate(${margin.left},${margin.top+18})`}>
+      <g transform={`translate(${margin.left},${margin.top+28})`}>
           <XAxis
             xScale={xScale}
             innerHeight={innerHeight}
