@@ -1,11 +1,10 @@
 import React, {useRef, useEffect, useState } from 'react'
 
-export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
+export const MapboxMap = ({mapsWidth, mapsHeight, Temperature, Neighborhoods }) =>  {
   const [lng, setLng] = useState(-73.970973)
   const [lat, setLat] = useState(40.716419)
   const [zoom, setZoom] = useState(9)
-  // center: [${lng}, ${lat}],
-  // zoom: ${zoom},
+
 
   return(
     <iframe
@@ -26,6 +25,48 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
         </style>
         </head>
         <body>
+        <style>
+          #menu {
+          background: #abcfe5;
+          position: absolute;
+          z-index: 1;
+          top: 10px;
+          left: 10px;
+          border-radius: 3px;
+          width: 120px;
+          border: 1px solid hsla(180, 3%, 63%, 1);
+          font-family: 'Open Sans', sans-serif;
+          }
+
+          #menu a {
+          font-size: 13px;
+          color: #0b4d94;
+          display: block;
+          margin: 0;
+          padding: 0;
+          padding: 10px;
+          text-decoration: none;
+          border-bottom: 1px solid hsla(180, 3%, 93%, 1);
+          text-align: center;
+          }
+
+          #menu a:last-child {
+          border: none;
+          }
+
+          #menu a.active:hover {
+          background-color: #eff0f0;
+          color: hsla(180, 3%, 43%, 1);
+          }
+          #menu a.active {
+          background-color: #1c6aaf;
+          color: #eff0f0;
+          }
+
+
+
+          </style>
+        <nav id="menu"></nav>
         <div id="map"></div>
         <script>
         	mapboxgl.accessToken = 'pk.eyJ1IjoibXRjb2x2YXJkIiwiYSI6ImNrbXpjMXV2dzAxOW4ycHBiZDB1NzE0amsifQ.p28rFaL7eqlLVZ0hdS-t_w';
@@ -44,7 +85,7 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
           })
 
         map.addLayer({
-        'id': 'temperatureRasterLayer',
+        'id': 'Temperature',
         'type': 'raster',
         'source': 'temperatureRaster',
         'layout': {'visibility': 'none'}
@@ -57,7 +98,7 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
         })
 
         map.addLayer({
-        'id': 'treeRasterLayer',
+        'id': 'TreeCover',
         'type': 'raster',
         'source': 'treeRaster',
         'layout': {'visibility': 'none'}
@@ -69,19 +110,68 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
         })
 
         map.addLayer({
-        'id': 'modzctaVectorLayer',
+        'id': 'Neighborhoods',
         'type': 'line',
         'source': 'modzctaVector',
         'layout': {'visibility': 'none'},
         'source-layer': 'modzcta-1m1hy2',
         })
 
-        map.setLayoutProperty('temperatureRasterLayer', 'visibility', 'visible')
-        map.setLayoutProperty('modzctaVectorLayer', 'visibility', 'visible')
-        map.setLayoutProperty('treeRasterLayer', 'visibility', 'visible')
-        map.setPaintProperty('modzctaVectorLayer', 'line-color', 'hsla(180, 3%, 63%, 1)')
+        map.setLayoutProperty('Temperature', 'visibility', 'visible')
+        map.setLayoutProperty('Neighborhoods', 'visibility', 'none')
+        map.setLayoutProperty('TreeCover', 'visibility', 'visible')
+        map.setPaintProperty('Neighborhoods', 'line-color', 'hsla(180, 3%, 63%, 1)')
 
         })
+        map.on('idle', function () {
+        // If these two layers have been added to the style,
+        // add the toggle buttons.
+        if (map.getLayer('Temperature') && map.getLayer('TreeCover') && map.getLayer('Neighborhoods')) {
+          // Enumerate ids of the layers.
+          var toggleableLayerIds = ['Temperature', 'TreeCover', 'Neighborhoods']
+          // Set up the corresponding toggle button for each layer.
+          for (var i = 0; i < toggleableLayerIds.length; i++) {
+            var id = toggleableLayerIds[i]
+            if (!document.getElementById(id)) {
+              // Create a link.
+              var link = document.createElement('a')
+              link.id = id
+              link.href = '#'
+              link.textContent = id
+              link.className = 'active'
+              // Show or hide layer when the toggle is clicked.
+              link.onclick = function (e) {
+                var clickedLayer = this.textContent
+                e.preventDefault()
+                e.stopPropagation()
+
+                var visibility = map.getLayoutProperty(
+                  clickedLayer,
+                  'visibility'
+                )
+                // Toggle layer visibility by changing the layout object's visibility property.
+                if (visibility === 'visible') {
+                  map.setLayoutProperty(
+                    clickedLayer,
+                    'visibility',
+                    'none'
+                  )
+                  this.className = ''
+                } else {
+                  this.className = 'active'
+                  map.setLayoutProperty(
+                    clickedLayer,
+                    'visibility',
+                    'visible'
+                  )
+                }
+              }
+              var layers = document.getElementById('menu')
+              layers.appendChild(link)
+            }
+          }
+        }
+      })
       </script>
       </body>
       </html>`}>

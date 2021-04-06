@@ -109,57 +109,55 @@ export const Maps = () => {
 //   setLat(map.getCenter().lat.toFixed(4));
 //   setZoom(map.getZoom().toFixed(2));
 //   });
-// map.on('idle', function () {
-//   // If these two layers have been added to the style,
-//   // add the toggle buttons.
-//   if (map.getLayer('temperatureRasterLayer') && map.getLayer('modzctaVectorLayer')) {
-//     // Enumerate ids of the layers.
-//     var toggleableLayerIds = ['temperatureRasterLayer', 'modzctaVectorLayer']
-//     // Set up the corresponding toggle button for each layer.
-//     for (var i = 0; i < toggleableLayerIds.length; i++) {
-//       var id = toggleableLayerIds[i]
-//       if (!document.getElementById(id)) {
-//         // Create a link.
-//         var link = document.createElement('a')
-//         link.id = id
-//         link.href = '#'
-//         link.textContent = id
-//         link.className = 'active'
-//         // Show or hide layer when the toggle is clicked.
-//         link.onclick = function (e) {
-//           var clickedLayer = this.textContent
-//           e.preventDefault()
-//           e.stopPropagation()
-//
-//           var visibility = map.getLayoutProperty(
-//             clickedLayer,
-//             'visibility'
-//           )
-//
-//           // Toggle layer visibility by changing the layout object's visibility property.
-//           if (visibility === 'visible') {
-//             map.setLayoutProperty(
-//               clickedLayer,
-//               'visibility',
-//               'none'
-//             )
-//             this.className = ''
-//           } else {
-//             this.className = 'active'
-//             map.setLayoutProperty(
-//               clickedLayer,
-//               'visibility',
-//               'visible'
-//             )
-//           }
-//         }
-//
-//         var layers = document.getElementById('menu')
-//         layers.appendChild(link)
-//       }
-//     }
-//   }
-// })
+  map.on('idle', function () {
+  // If these two layers have been added to the style,
+  // add the toggle buttons.
+  if (map.getLayer('temperatureRasterLayer') && map.getLayer('treeRasterLayer') && map.getLayer('modzctaVectorLayer')) {
+    // Enumerate ids of the layers.
+    var toggleableLayerIds = ['temperatureRasterLayer', 'treeRasterLayer', 'modzctaVectorLayer']
+    // Set up the corresponding toggle button for each layer.
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+      var id = toggleableLayerIds[i]
+      if (!document.getElementById(id)) {
+        // Create a link.
+        var link = document.createElement('a')
+        link.id = id
+        link.href = '#'
+        link.textContent = id
+        link.className = 'active'
+        // Show or hide layer when the toggle is clicked.
+        link.onclick = function (e) {
+          var clickedLayer = this.textContent
+          e.preventDefault()
+          e.stopPropagation()
+
+          var visibility = map.getLayoutProperty(
+            clickedLayer,
+            'visibility'
+          )
+          // Toggle layer visibility by changing the layout object's visibility property.
+          if (visibility === 'visible') {
+            map.setLayoutProperty(
+              clickedLayer,
+              'visibility',
+              'none'
+            )
+            this.className = ''
+          } else {
+            this.className = 'active'
+            map.setLayoutProperty(
+              clickedLayer,
+              'visibility',
+              'visible'
+            )
+          }
+        }
+        var layers = document.getElementById('menu')
+        layers.appendChild(link)
+      }
+    }
+  }
+})
 
 
 

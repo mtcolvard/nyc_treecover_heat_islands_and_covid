@@ -11,6 +11,8 @@ import { TreesHistogram } from './TreesHistogram/index'
 import { ScatterPlot } from './Scatter/index'
 import { SvgMap } from './Maps/SvgMap'
 import { MapboxMap } from './Maps/MapboxMap'
+import { MapboxButton } from './Maps/MapboxButton'
+
 
 const attributes = {
   NEIGHBORHOOD_NAME: { id: 1, value: 'NEIGHBORHOOD_NAME', label: 'Neighborhood', domainMin: 0, yColorScale: [0, 1] },
@@ -85,6 +87,7 @@ const App = () => {
     d ? setHoveredValue(d) : setHoveredValue(null)
   }, [])
 
+
   if (!boundaries || !covidData || !mapsWidth) {
     return <pre>Loading...</pre>
   }
@@ -154,7 +157,8 @@ const App = () => {
           </div>
           <MapboxMap
             mapsWidth={mapsWidth}
-            mapsHeight={mapsHeight}/>
+            mapsHeight={mapsHeight}
+            />
           <div className="maps-footer"
           style={{width:mapsWidth}}>
             <p>
@@ -223,16 +227,16 @@ const App = () => {
       “Of all the climate change exposures we study, heat is the No. 1 killer.” <span className="quote-attribution"> - Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment</span></p>
     </div>
     <hr className='txt-hr'/>
-    <div className="charts-header-lead" width={innerWidth}>
+    <div className="charts-header-lead txt-l" width={innerWidth}>
       <p>
       New Yorkers had drastically different experiences this past year. </p>
     </div>
-    <div className="charts-header" width={innerWidth}>
+    <div className="charts-header txt-l" width={innerWidth}>
       <p>
       Neighborhoods with high rates of infection on average:</p>
     </div>
 
-      <div className={"align-center"} width={innerWidth}>
+    <div className={"align-center"} width={innerWidth}>
         <svg className={" w360 h360"}>
           <ScatterPlot
           covidData={covidData}
