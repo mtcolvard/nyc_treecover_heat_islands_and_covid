@@ -1,5 +1,5 @@
 import {
-  geoEquirectangular,
+  geoMercator,
   geoPath,
 } from 'd3'
 
@@ -18,7 +18,7 @@ export const SvgMapFill = ({
   fillData
 }) => {
 
-  const projection = geoEquirectangular()
+  const projection = geoMercator()
     .center([-73.95, 40.74])
     .fitSize([width, height], neighborhood)
   const path = geoPath(projection)

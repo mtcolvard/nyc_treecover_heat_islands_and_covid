@@ -40,7 +40,7 @@ export const TreesHistogram = ({ covidData, width, height, hoveredValue, sendHov
 return(
   <>
     <rect width={width} height={height} fill={rectFillColor} />
-      <g transform={`translate(${margin.left},${margin.top+28})`}>
+      <g transform={`translate(${margin.left},${margin.top+18})`}>
           <XAxis
             xScale={xScale}
             innerHeight={innerHeight}
@@ -59,9 +59,9 @@ return(
           />
           <text
             className="chart-title"
-            transform={`translate(${0}, -18)`}
+            transform={`translate(${0}, -12)`}
             textAnchor="start"
-          >And had far less access to greenspace
+          >Had far less access to greenspace...
           </text>
           <text
             className="axis-label" x={innerWidth/2} y={innerHeight + xAxisLabelOffset}

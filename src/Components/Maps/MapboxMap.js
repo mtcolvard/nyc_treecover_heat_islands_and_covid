@@ -4,6 +4,9 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
   const [lng, setLng] = useState(-73.970973)
   const [lat, setLat] = useState(40.716419)
   const [zoom, setZoom] = useState(9)
+  // center: [${lng}, ${lat}],
+  // zoom: ${zoom},
+
   return(
     <iframe
       width={`${mapsWidth}`}
@@ -29,9 +32,10 @@ export const MapboxMap = ({mapsWidth, mapsHeight}) =>  {
         const map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mtcolvard/ckmzb6l1603hr17mtbxwmn1w8',
-        center: [${lng}, ${lat}],
-        zoom: ${zoom},
+        bounds: [[-74.255588, 40.496115],[-73.700011, 40.915532]],
         scrollZoom: false,
+        logoPosition: 'bottom-left',
+        showZoom: 'true',
         });
         map.on('load', () => {
           map.addSource('temperatureRaster', {

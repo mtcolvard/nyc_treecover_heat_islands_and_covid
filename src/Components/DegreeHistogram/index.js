@@ -60,9 +60,9 @@ return(
           />
           <text
             className="chart-title"
-            transform={`translate(${0}, -18)`}
+            transform={`translate(-6, -12)`}
             textAnchor="start"
-          >Experienced much higher temperatures
+          >And suffered much higher temperatures
           </text>
           <text
             className="axis-label" x={innerWidth/2} y={innerHeight + xAxisLabelOffset}
@@ -80,67 +80,3 @@ return(
     </g>
   </>
 )}
-
-
-// <AxisBottom
-//   xScale={xScale}
-//   innerHeight={innerHeight}
-//   tickFormat={xAxisTickFormat}
-//   tickOffset={8}
-// />
-
-
-// <g transform={`translate(${margin.left},${margin.top})`}>
-//   <div className="menus-container">
-//     <span className="dropdown-label">x</span>
-//     <ReactDropdown
-//       options={attributeOptions}
-//       value={histogramXAttribute}
-//       onChange={({ value }) => setXAttribute(value)}
-//      />
-//    <span className="dropdown-label">y</span>
-//     <ReactDropdown
-//       options={attributeOptions}
-//       value={histogramYAttribute}
-//       onChange={({ value }) => setYAttribute(value)}
-//     />
-//   </div>
-//   <div className="chart-container">
-//     <AxisBottom
-//       xScale={xScale}
-//       innerHeight={innerHeight}
-//       tickFormat={xAxisTickFormat}
-//       tickOffset={8}
-//     />
-//     <text
-//       className="axis-label"
-//       textAnchor="middle"
-//       transform={`translate(${-yAxisLabelOffset},${innerHeight /
-//         2}) rotate(-90)`}
-//     >
-//       {yAxisLabel}
-//     </text>
-//     <AxisLeft
-//       yScale={yScale}
-//       innerWidth={innerWidth}
-//       tickFormat={yAxisTickFormat}
-//       tickOffset={5}
-//       />
-//     <text
-//       className="axis-label"
-//       x={innerWidth / 2}
-//       y={innerHeight + xAxisLabelOffset}
-//       textAnchor="middle"
-//     >
-//       {xAxisLabel}
-//     </text>
-//     <MarksHistogram
-//       binnedData={binnedData}
-//       xScale={xScale}
-//       yScale={yScale}
-//       tooltipFormat={d => d}
-//       circleRadius={2}
-//       innerHeight={innerHeight}
-//     />
-// </div>
-// </g>

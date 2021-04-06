@@ -27,20 +27,24 @@ h2 {
 }
 .maps-header {
   padding: 0 0.8em 0 0.8em;
-  margin-bottom: 0.3em;
+  margin: 0.3em 0 0.3em 0 ;
 }
 .maps-footer {
-  padding: 0 0.8em 2em 0.8em;
-  margin-bottom: 0.3em;
-
+  padding: 0 0.8em 1.6em 0.8em;
+  margin: 0.3em 0 0.3em 0 ;
 }
 .footnote {
   text-align: right;
   font-size: .66em;
+  margin: 0 0 0.3em 0;
 }
 .quote {
+  font-size: 1.5em;
   padding: 0 0.8em 0 0.8em;
   margin-bottom: 0.5em;
+}
+.quote-attribution {
+  /* font-size: 2rem; */
 }
 .charts-header-lead {
   padding: 0 0.8em 0 0.8em;
@@ -50,9 +54,10 @@ h2 {
   padding: 0 0.8em 0 0.8em;
   margin-bottom: 0.5em;
 }
-.three-graphs-div {
-  padding: 0 20px;
+.charts-container {
+  justify-content: center;
 }
+
 .chart-title {
   font-size:1.1rem;
   fill: #635F5D;

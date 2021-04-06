@@ -111,7 +111,6 @@ const App = () => {
 
   return (
     <>
-    <div className="main-container">
       <div>
         <div className="headline" width={innerWidth} height={innerWidth/6}>
           <h1>Urban "heat islands" have exacerbated pandemic suffering amongst New York City's poorest</h1>
@@ -124,7 +123,7 @@ const App = () => {
       <div  className="flex-parent-inline flex-parent--wrap ">
         <div className="flex-child">
           <div className="maps-header"
-          style={{width:mapsWidth, height:0.13*mapsHeight}}>
+          style={{width:mapsWidth}}>
           <p >
           Temperature variations by neighborhood on a typically hot August day</p>
           </div>
@@ -132,15 +131,16 @@ const App = () => {
             mapsWidth={mapsWidth}
             mapsHeight={mapsHeight}/>
           <div className="maps-footer"
-          style={{width:mapsWidth, height:0.2*mapsHeight}}>
+          style={{width:mapsWidth}}>
             <p>
             Neighborhoods lacking foliage and greenspace suffer dramatically higher temperatures</p>
             <p className="footnote">Data: USGS, Landsat-8 ARD</p>
           </div>
         </div>
+        <div></div>
         <div className="flex-child">
-          <div className="maps-header"style={{width:mapsWidth, height:0.13*mapsHeight}}>
-          <p>Cumulative infection rate by neighborhood: Confirmed cases per  total tests conducted</p>
+          <div className="maps-header"style={{width:mapsWidth}}>
+          <p>Cumulative infection rate by neighborhood: confirmed cases per  total tests conducted</p>
           </div>
           <svg className="svg-map" width={mapsWidth} height={mapsHeight} margin={0}>
             <g transform={`translate(0, 0)`} >
@@ -158,17 +158,19 @@ const App = () => {
             </g>
           </svg>
             <div className="maps-footer"
-            style={{width:mapsWidth, height:0.2*mapsHeight}}>
+            style={{width:mapsWidth}}>
               <p>COVID-positive test rates are especially high in low-income neighborhoods</p>
               <p className="footnote">Data: NYC Dept. of Health and Mental Hygiene</p>
             </div>
         </div>
       </div>
     </div>
-    <div className="quote" width={innerWidth}>
+    <hr className='txt-hr'/>
+    <div className="quote txt-blockquote" width={innerWidth}>
       <p>
-      “Of all the climate change exposures we study, heat is the No. 1 killer.” Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment"</p>
+      “Of all the climate change exposures we study, heat is the No. 1 killer.” <span className="quote-attribution"> - Rupa Basu, chief of air and climate epidemiology, California Office of Environmental Health Hazard Assessment</span></p>
     </div>
+    <hr className='txt-hr'/>
     <div className="charts-header-lead" width={innerWidth}>
       <p>
       New Yorker's had drastically different experiences this past year. </p>
@@ -178,8 +180,8 @@ const App = () => {
       Neighborhoods with high rates of infection on average:</p>
     </div>
 
-      <div width={innerWidth}>
-        <svg className={"three-graphs w360 h360"}>
+      <div className={"align-center"} width={innerWidth}>
+        <svg className={" w360 h360"}>
           <ScatterPlot
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -196,7 +198,7 @@ const App = () => {
           margin={graphMargin}
           />
         </svg>
-        <svg className={"three-graphs w360 h360"} >
+        <svg className={" w360 h360"} >
           <TreesHistogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -212,10 +214,9 @@ const App = () => {
           xScaleMin={0}
           rectFillColor={rectFillColor}
           margin={graphMargin}
-
           />
         </svg>
-        <svg className={"three-graphs w360 h360"} >
+        <svg className={" w360 h360"} >
           <DegreeHistogram
           covidData={covidData}
           keyedCovidData={keyedCovidData}
@@ -234,7 +235,6 @@ const App = () => {
           />
         </svg>
       </div>
-    </div>
     </>
   )
 }

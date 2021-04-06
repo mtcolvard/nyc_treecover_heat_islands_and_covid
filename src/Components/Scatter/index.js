@@ -12,7 +12,6 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
   const innerHeight = height - margin.top - margin.bottom
   const innerWidth = width - margin.left - margin.right
   const xAxisLabelOffset = 48
-  const yAxisLabelOffset = 50
 
   const xAxisLabel = attributes[scatterXAttribute].label
   const yAxisLabel = attributes[scatterYAttribute].label
@@ -31,12 +30,6 @@ export const ScatterPlot = ({ covidData, keyedCovidData, width, height, hoveredV
     // .domain(extent(covidData, yValue))
     .range([innerHeight, 0])
     .nice()
-
-  // const hoveredValueDataArray = hoveredValue.map(d =>
-  //   keyedCovidData.get(d))
-  // console.log('hoveredValueDataArray', hoveredValueDataArray)
-
-  // console.log('keyedCovidData', [keyedCovidData.get(hoveredValue)])
 
 return(
   <>
@@ -73,9 +66,9 @@ return(
       />}
       <text
         className="chart-title"
-        transform={`translate(${0}, -18)`}
+        transform={`translate(${0}, -12)`}
         textAnchor="start"
-      >Earned far less income
+      >Earned far less income...
       </text>
       <text
         className="axis-label" x={innerWidth/2} y={innerHeight + xAxisLabelOffset}
